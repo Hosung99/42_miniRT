@@ -1,6 +1,13 @@
 #ifndef STRUCTURES_H
 # define STRUCTURES_H
 
+# include "./libft/libft.h"
+# include <math.h>
+# include <mlx.h>
+# include <stdlib.h>
+# include <fcntl.h>
+# include <unistd.h>
+
 #define TRUE 1
 #define FALSE 0
 #define SP 1
@@ -10,8 +17,9 @@
 #define LUMEN 2
 #define WIDTH 1920
 #define HEIGHT 1080
+#define ESC_CODE 53
 
-typedef struct s_vec3 t_vec3;
+typedef struct s_vector3 t_vector3;
 typedef struct t_point3 t_point3;
 typedef struct t_color3 t_color3;
 typedef	struct s_ray t_ray;
@@ -23,61 +31,71 @@ typedef struct s_object t_object;
 typedef struct s_light t_light;
 typedef struct s_scene t_scene;
 typedef struct s_plane t_plane;
+
+typedef struct s_data
+{
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+}		t_data;
+
 struct s_canvas
 {
-	int width; //캔버스 높이
-	int height; //캔버스 길이
-	double aspect_ratio; //종횡비
+	int		width; //캔버스 높이
+	int		height; //캔버스 길이
+	double	aspect_ratio; //종횡비
 };
 
-struct s_vec3
+struct s_vector3
 {
-	double x;
-	double y;
-	double z;
+	double	x;
+	double	y;
+	double	z;
 };
 
 struct t_color3
 {
-	double r;
-	double g;
-	double b;
+	double	r;
+	double	g;
+	double	b;
 };
 
 struct t_point3
 {
-	double x;
-	double y;
-	double z;
+	double	x;
+	double	y;
+	double	z;
 };
 
 struct s_ray
 {
 	t_point3	origin;
-	t_vec3		direction;
+	t_vector3	direction;
 };
 
 struct s_camera
 {
-	t_point3 origin; //카메라 위치
-	double	viewport_h; //뷰포트 높이
-	double	viewport_w; //뷰포트 길이
-	t_vec3	horizontal; //수평길이 벡터
-	t_vec3	vertical; //수직길이 벡터
-	double	focal_len; //초점거리
-	t_point3 left_top; //왼쪽위 코너점
-	double	fov; //수평시야범위
+	t_point3	origin; //카메라 위치
+	double		viewport_h; //뷰포트 높이
+	double		viewport_w; //뷰포트 길이
+	t_vector3	horizontal; //수평길이 벡터
+	t_vector3	vertical; //수직길이 벡터
+	double		focal_len; //초점거리
+	t_point3	left_top; //왼쪽위 코너점
+	double		fov; //수평시야범위
 };
 
 struct s_hit_record
 {
-	t_point3 point;
-	t_vec3 normal; //교점의 법선벡터
-	double t; //광선의 원점과 교점사이의 거리
-	double tmin; //카메라 뒷부분. t < 0
-	double tmax; //오브젝트가 카메라보다 너무 먼경우
-	int	front_face;
-	t_color3 albedo;
+	t_point3	point;
+	t_vector3	normal; //교점의 법선벡터
+	double		t; //광선의 원점과 교점사이의 거리
+	double		tmin; //카메라 뒷부분. t < 0
+	double		tmax; //오브젝트가 카메라보다 너무 먼경우
+	int			front_face;
+	t_color3	albedo;
 };
 
 struct	s_object
@@ -97,27 +115,30 @@ struct s_light
 
 struct  s_scene
 {
-	t_canvas	canvas;
-	t_camera	camera;
-	t_object	*world;
-	t_object	*light;
-	t_color3	ambient;
-	t_ray		ray;
+	t_canvas		canvas;
+	t_camera		camera;
+	t_object		*world;
+	t_object		*light;
+	t_color3		ambient;
+	t_ray			ray;
 	t_hit_record	rec;
+	t_data			img;
+	void			*mlx;
+	void			*mlx_win;
 };
 
 struct s_sphere
 {
-	t_point3 center;
-	double	 radius1;
-	double	 radius2;
+	t_point3	center;
+	double		radius1;
+	double		radius2;
 };
 
 struct s_plane
 {
-	t_vec3		dir; //평면의 방향벡터
+	t_vector3	dir; //평면의 방향벡터
 	t_point3	point; //위치
-	t_color3    color; //RGB
+	t_color3	color; //RGB
 };
 
 #endif

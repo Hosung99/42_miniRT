@@ -7,7 +7,7 @@ t_canvas canvas(int width, int height)
 
 	canvas.width = width;
 	canvas.height = height;
-	canvas.aspect_ratio = (double)width / (double)height;
+	canvas.aspect_ratio = 16 / 9;
 	return (canvas);
 }
 
@@ -17,8 +17,8 @@ t_camera camera(t_canvas *canvas, t_point3 origin)
 
 	camera.origin = origin;
 	camera.focal_len = 1.0;
-	camera.viewport_h = 4;
-	camera.viewport_w = 4 * canvas->aspect_ratio;
+	camera.viewport_h = 2.0;
+	camera.viewport_w = 2.0 * canvas->aspect_ratio;
 	camera.horizontal = vec3(camera.viewport_w, 0, 0);
 	camera.vertical = vec3(0, camera.viewport_h, 0);
 	camera.left_top.x = camera.origin.x - camera.viewport_w / 2;
@@ -29,7 +29,7 @@ t_camera camera(t_canvas *canvas, t_point3 origin)
 }
 
 
-t_plane *plane(t_vec3 dir, t_point3 point, t_color3 color)
+t_plane *plane(t_vector3 dir, t_point3 point, t_color3 color)
 {
 	t_plane *plane;
 

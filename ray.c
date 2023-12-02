@@ -1,13 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ray.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/12/02 15:03:18 by seoson            #+#    #+#             */
+/*   Updated: 2023/12/02 15:03:19 by seoson           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "trace.h"
 
 //ray 생성자(정규화 된 ray)
-t_ray ray(t_point3 origin, t_vec3 dir)
+t_ray ray(t_point3 origin, t_vector3 dir)
 {
 	t_ray ray;
 
 	ray.origin = origin;
 	//vunit 함수에서 방향벡터의 크기를 1로 정규화해준다.
-	ray.direction = vunit(dir);
+	ray.direction = vector_normalize(dir);
 	return (ray);
 }
 
@@ -25,11 +37,11 @@ t_point3 ray_at(t_ray *ray, double t)
 t_ray	ray_primary(t_camera *camera, double u, double v)
 {
 	t_ray ray;
-	t_vec3 vec;
-	t_vec3 temp;
+	t_vector3 vec;
+	t_vector3 temp;
 
 	ray.origin = camera->origin;
-	temp = vplus(vmult(camera->horizontal, u), vmult(camera->vertical, v));
+	temp = vector_plus_vector(vector_multiply_scala(camera->horizontal, u), vector_multiply_scala(camera->vertical, v));
 	vec.x = camera->left_top.x + temp.x - camera->origin.x;
 	vec.y = camera->left_top.y + temp.y - camera->origin.y;
 	vec.z = camera->left_top.z + temp.z - camera->origin.z;
@@ -62,8 +74,8 @@ t_color3	point_light_get(t_scene *scene, t_light *light)
 {
 	t_color3 diffuse;
 	t_color3 color_temp;
-	t_vec3 light_dir;
-	t_vec3 temp;
+	t_vector3 light_dir;
+	t_vector3 temp;
 	t_point3 point_temp;
 	double	kd; //diffuse 강도
 	double	brightness;
@@ -73,24 +85,20 @@ t_color3	point_light_get(t_scene *scene, t_light *light)
 	temp.x = light->origin.x - scene->rec.point.x; //원점에서 광원까지의 벡터
 	temp.y = light->origin.y - scene->rec.point.y;
 	temp.z = light->origin.z - scene->rec.point.z;
-	light_len = vlength(temp);
+	light_len = vector_length(temp);
 	point_temp.x = scene->rec.point.x + EPSILON * scene->rec.normal.x;
 	point_temp.y = scene->rec.point.y + EPSILON * scene->rec.normal.y;
 	point_temp.z = scene->rec.point.z + EPSILON * scene->rec.normal.z;
 	light_ray = ray(point_temp, temp);
 	if (in_shadow(scene->world, light_ray, light_len))
 		return (color3(0,0,0));
-	light_dir = vunit(temp); //교점에서 출발하여 광원을 향하는 벡터 (정규화한)
+	light_dir = vector_normalize(temp); //교점에서 출발하여 광원을 향하는 벡터 (정규화한)
 	//cos세타가 90도일때 , 0이고 세타가 둔각일 시 음수가 되므로 0.0으로 초기화해준다.
-	kd = fmax(vdot(scene->rec.normal, light_dir), 0.0); //두 벡터의 내적
-	diffuse.r = light->light_color.r * kd;
-	diffuse.g = light->light_color.g * kd;
-	diffuse.b = light->light_color.b * kd;
+	kd = fmax(vector_dot(scene->rec.normal, light_dir), 0.0); //두 벡터의 내적
+	diffuse = color_multiply_scala(light->light_color, kd);
 	brightness = light->bright_ratio * LUMEN;
-	color_temp = plus_color(scene->ambient, diffuse);
-	color_temp.r = color_temp.r * brightness;
-	color_temp.g = color_temp.g * brightness;
-	color_temp.b = color_temp.b * brightness;
+	color_temp = color_plus_color(scene->ambient, diffuse);
+	color_temp = color_multiply_scala(color_temp, brightness);
 	return (color_temp);
 }
 
@@ -98,17 +106,16 @@ t_color3	phong_lightning(t_scene *scene)
 {
 	t_color3 	light_color;
 	t_object	*lights;
-	// t_color3	light_temp;
 
 	light_color = color3(0,0,0); //광원 초기화
 	lights = scene->light;
 	while(lights)
 	{
 		if (lights->object_type == LIGHT_POINT)
-			light_color = plus_color(light_color, point_light_get(scene, lights->element));
+			light_color = color_plus_color(light_color, point_light_get(scene, lights->element));
 		lights = lights->next;
 	}
-	light_color = plus_color(light_color, scene->ambient); //모든 광원에 의한 빛의 양을 구한 후
+	light_color = color_plus_color(light_color, scene->ambient); //모든 광원에 의한 빛의 양을 구한 후
 	light_color.r = light_color.r * scene->rec.albedo.r; //object의 반사율과 곱한다.
 	light_color.g = light_color.g * scene->rec.albedo.g;
 	light_color.b = light_color.b * scene->rec.albedo.b;
@@ -127,6 +134,6 @@ t_color3	ray_color(t_scene *scene)
 	{
 		// (1-t) * 흰색 + t * 하늘색
 		t = 0.5 * (scene->ray.direction.y + 1.0);
-		return (plus_color(v_mult_color(color3(1,1,1), 1.0-t), v_mult_color(color3(0.5,0.7,1.0), t)));
+		return (color_plus_color(color_multiply_scala(color3(1,1,1), 1.0-t), color_multiply_scala(color3(0.5,0.7,1.0), t)));
 	}
 }

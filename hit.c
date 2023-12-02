@@ -4,27 +4,27 @@
 
 void	set_face_normal(t_ray *ray, t_hit_record *rec) //구가 카메라를 둘러쌈을 고려.
 {
-	rec->front_face = vdot(ray->direction, rec->normal) < 0; //백터 내적
+	rec->front_face = vector_dot(ray->direction, rec->normal) < 0; //백터 내적
 	if (!rec->front_face) //벡터 내적이 0보다 작다면 법선벡터의 반대로 설정해준다.
-		rec->normal = vmult(rec->normal, -1);
+		rec->normal = vector_multiply_scala(rec->normal, -1);
 }
 
 double	hit_plane(t_object *world, t_ray *ray, t_hit_record *rec)
 {
 	t_plane	*pl;
-	t_vec3	temp;
+	t_vector3	temp;
 	float	parent;
 	float	child;
 	float	temp2;
 
 	pl = world->element;
-	parent = vdot(ray->direction, pl->dir);
+	parent = vector_dot(ray->direction, pl->dir);
 	if (parent < EPSILON)
 		return (0);
 	temp.x = rec->point.x -ray->origin.x;
 	temp.y = rec->point.y -ray->origin.y;
 	temp.z = rec->point.z -ray->origin.z;
-	child = vdot(temp, pl->dir);
+	child = vector_dot(temp, pl->dir);
 	temp2 = child / parent;
 	if (child < 0)
 		return (0);
@@ -32,13 +32,13 @@ double	hit_plane(t_object *world, t_ray *ray, t_hit_record *rec)
 		return (0);
 	rec->t = child / parent;
 	rec->point = ray_at(ray, rec->t);
-	rec->normal = vunit(pl->dir);
+	rec->normal = vector_normalize(pl->dir);
 	return (1);
 }
 
 double	hit_sphere(t_object *world, t_ray *ray, t_hit_record *rec)
 {
-	t_vec3 oc;
+	t_vector3 oc;
 	t_sphere *sp;
 	double a;
 	double half_b;
@@ -51,9 +51,9 @@ double	hit_sphere(t_object *world, t_ray *ray, t_hit_record *rec)
 	oc.x = ray->origin.x - sp->center.x;
 	oc.y = ray->origin.y - sp->center.y;
 	oc.z = ray->origin.z - sp->center.z;
-	a = vlength2(ray->direction);
-	half_b = vdot(oc, ray->direction);
-	c = vlength2(oc) - sp->radius2;
+	a = vector_length_double(ray->direction);
+	half_b = vector_dot(oc, ray->direction);
+	c = vector_length_double(oc) - sp->radius2;
 	result = half_b * half_b - a * c; //짝수 근의공식
 	if (result < 0)
 		return (0);
