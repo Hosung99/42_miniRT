@@ -1,10 +1,7 @@
 #ifndef UTILS_H
 # define UTILS_H
 
-# include <math.h>
-# include <stdlib.h>
-# include <stdio.h>
-# include "../structures.h"
+#include "../main.h"
 
 t_vector3	vec3(double x, double y, double z);
 t_vector3	vector_plus_vector(t_vector3 vec, t_vector3 vec2);

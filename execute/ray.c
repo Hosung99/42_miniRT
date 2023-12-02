@@ -6,11 +6,11 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 15:03:18 by seoson            #+#    #+#             */
-/*   Updated: 2023/12/02 15:03:19 by seoson           ###   ########.fr       */
+/*   Updated: 2023/12/02 20:48:37 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "trace.h"
+#include "../main.h"
 
 //ray 생성자(정규화 된 ray)
 t_ray ray(t_point3 origin, t_vector3 dir)
@@ -41,7 +41,7 @@ t_ray	ray_primary(t_camera *camera, double u, double v)
 	t_vector3 temp;
 
 	ray.origin = camera->origin;
-	temp = vector_plus_vector(vector_multiply_scala(camera->horizontal, u), vector_multiply_scala(camera->vertical, v));
+	temp = vector_plus_vector(vector_multiply_scala(camera->horizontal, u), vector_multiply_scala(camera->vertical, -v));
 	vec.x = camera->left_top.x + temp.x - camera->origin.x;
 	vec.y = camera->left_top.y + temp.y - camera->origin.y;
 	vec.z = camera->left_top.z + temp.z - camera->origin.z;

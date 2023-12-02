@@ -1,5 +1,16 @@
-#include "scene.h"
-# include "utils.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   scene.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/12/02 16:41:04 by seoson            #+#    #+#             */
+/*   Updated: 2023/12/02 20:46:51 by seoson           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../main.h"
 
 t_canvas canvas(int width, int height)
 {
@@ -22,7 +33,7 @@ t_camera camera(t_canvas *canvas, t_point3 origin)
 	camera.horizontal = vec3(camera.viewport_w, 0, 0);
 	camera.vertical = vec3(0, camera.viewport_h, 0);
 	camera.left_top.x = camera.origin.x - camera.viewport_w / 2;
-	camera.left_top.y = camera.origin.y - camera.viewport_h / 2;
+	camera.left_top.y = camera.origin.y + camera.viewport_h / 2;
 	camera.left_top.z = camera.origin.z - camera.focal_len;
 	camera.fov = 70;
 	return (camera);

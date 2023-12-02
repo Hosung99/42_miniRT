@@ -6,11 +6,11 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 14:31:53 by seoson            #+#    #+#             */
-/*   Updated: 2023/12/02 14:37:12 by seoson           ###   ########.fr       */
+/*   Updated: 2023/12/02 16:40:52 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utils.h"
+#include "../main.h"
 
 t_vector3	vec3(double x, double y, double z)
 {

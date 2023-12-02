@@ -1,36 +1,42 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   structures.h                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/12/02 17:24:50 by seoson            #+#    #+#             */
+/*   Updated: 2023/12/02 17:26:00 by seoson           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef STRUCTURES_H
 # define STRUCTURES_H
 
-# include "./libft/libft.h"
-# include <math.h>
-# include <mlx.h>
-# include <stdlib.h>
-# include <fcntl.h>
-# include <unistd.h>
+# include "main.h"
+# define TRUE 1
+# define FALSE 0
+# define SP 1
+# define PL 2
+# define LIGHT_POINT 1
+# define EPSILON 1e-6
+# define LUMEN 2
+# define WIDTH 1920
+# define HEIGHT 1080
+# define ESC_CODE 53
 
-#define TRUE 1
-#define FALSE 0
-#define SP 1
-#define PL 2
-#define LIGHT_POINT 1
-#define EPSILON 1e-6
-#define LUMEN 2
-#define WIDTH 1920
-#define HEIGHT 1080
-#define ESC_CODE 53
-
-typedef struct s_vector3 t_vector3;
-typedef struct t_point3 t_point3;
-typedef struct t_color3 t_color3;
-typedef	struct s_ray t_ray;
-typedef struct s_camera t_camera;
-typedef struct s_canvas t_canvas;
-typedef struct s_sphere t_sphere;
-typedef struct s_hit_record t_hit_record;
-typedef struct s_object t_object;
-typedef struct s_light t_light;
-typedef struct s_scene t_scene;
-typedef struct s_plane t_plane;
+typedef struct s_vector3	t_vector3;
+typedef struct s_point3		t_point3;
+typedef struct s_color3		t_color3;
+typedef struct s_ray		t_ray;
+typedef struct s_camera		t_camera;
+typedef struct s_canvas		t_canvas;
+typedef struct s_sphere		t_sphere;
+typedef struct s_hit_record	t_hit_record;
+typedef struct s_object		t_object;
+typedef struct s_light		t_light;
+typedef struct s_scene		t_scene;
+typedef struct s_plane		t_plane;
 
 typedef struct s_data
 {
@@ -55,14 +61,14 @@ struct s_vector3
 	double	z;
 };
 
-struct t_color3
+struct s_color3
 {
 	double	r;
 	double	g;
 	double	b;
 };
 
-struct t_point3
+struct s_point3
 {
 	double	x;
 	double	y;
