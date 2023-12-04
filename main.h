@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 16:27:52 by marvin            #+#    #+#             */
-/*   Updated: 2023/12/02 17:13:46 by seoson           ###   ########.fr       */
+/*   Updated: 2023/12/04 17:10:56 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_color3	point_light_get(t_scene *scene, t_light *light);
 t_color3	phong_lightning(t_scene *scene);
 double	hit_sphere(t_object *sp, t_ray *ray, t_hit_record *rec);
 
-t_canvas	canvas(int  width, int height);
+t_canvas canvas(int width, int height, double fov);
 t_camera	camera(t_canvas *canvas, t_point3 origin);
 t_sphere	*sphere(t_point3 center, double radius);
 t_plane		*plane(t_vector3 dir, t_point3 point, t_color3 color);

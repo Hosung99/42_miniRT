@@ -6,15 +6,28 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 14:22:27 by seoson            #+#    #+#             */
-/*   Updated: 2023/12/02 20:52:09 by seoson           ###   ########.fr       */
+/*   Updated: 2023/12/04 20:19:02 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
+int	before_exit(t_scene *scene)
+{
+	mlx_destroy_image(scene->mlx, scene->img.img);
+	mlx_destroy_window(scene->mlx, scene->mlx_win);
+	exit(0);
+}
+
+int	key_hook(int keycode, t_scene *scene)
+{
+	if (keycode == ESC_CODE)
+		before_exit(scene);
+	return (0);
+}
+
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
-	printf("color : %d\n", color);
 	char	*dst;
 
 	if (x < 0 || x >= WIDTH || y < 0 || y >= HEIGHT)
@@ -33,18 +46,17 @@ t_scene	*scene_init(void)
 	scene = (t_scene *)malloc(sizeof(t_scene));
 	if (!scene)
 		return (NULL); //exit하도록 수정
-	scene->canvas = canvas(WIDTH,HEIGHT);
-	scene->camera = camera(&scene->canvas, point3(0,0,20));
+	scene->canvas = canvas(WIDTH,HEIGHT,70);
+	scene->camera = camera(&scene->canvas, point3(0,0,5));
 	//objec추가 함수화하기
-    world = object(SP, sphere(point3(-2, 0, -5), 2), color3(0.5, 0, 0)); // world 에 구1 추가
-    oadd(&world, object(SP, sphere(point3(0, -1000, 0), 995), color3(1, 1, 1))); // world 에 구3 추가
-    oadd(&world, object(SP, sphere(point3(2, 1, -5), 2), color3(1, 0.5, 0))); // world 에 구2 추가
-	// oadd(&world, object(PL, plane(vec3(0.0,0.0,-1.0), point3(0.0,0.0,-10.0), color3(0,0,0.5)), color3(0.5,0,0)));
+    world = object(SP, sphere(point3(-2, 1, -5), 2), color3(0.5, 0, 0)); // world 에 구1 추가
+	oadd(&world, object(SP, sphere(point3(2, 1, -5), 2), color3(0, 0.5, 0))); // world 에 구2 추가
+	oadd(&world, object(PL, plane(vec3(-1, -1, -1), point3(0, 0, 0), color3(0,0,1)), color3(0,0,1))); // world 에 평면 추가
     scene->world = world;
-   	lights = object(LIGHT_POINT, light_point(point3(0, 3, 0), color3(1, 1, 1), 0.7), color3(0, 0, 0)); // 더미 albedo
+    lights = object(LIGHT_POINT, light_point(point3(0, 5, 0), color3(1, 1, 1), 0.5), color3(0, 0, 0)); // 더미 albedo
     scene->light = lights;
 	ka = 0.1;
-	scene->ambient = color_multiply_scala(scene->ambient, ka);
+	scene->ambient = color_multiply_scala(color3(1,1,1), ka);
 	return (scene);
 }
 
@@ -53,12 +65,9 @@ int	write_color(t_color3 pixel_color)
 {
 	int	color;
 
-	color = 0;
-	color += pixel_color.r * (int)255.999;
-	color <<= 16;
-	color += pixel_color.g * (int)255.999;
-	color <<= 8;
-	color += pixel_color.b * (int)255.999;
+	color = (int)(pixel_color.r * 255.999) << 16;
+	color |= (int)(pixel_color.g * 255.999) << 8;
+	color |= (int)(pixel_color.b * 255.999);
 	return (color);
 }
 
@@ -77,7 +86,6 @@ int	main(void)
 	scene->img.img = mlx_new_image(scene->mlx, WIDTH, HEIGHT);
 	scene->img.addr = mlx_get_data_addr(scene->img.img, &scene->img.bits_per_pixel, \
 	&scene->img.line_length, &scene->img.endian);
-    // j = scene->canvas.height - 1;
 	j = 0;
 	while (j < scene->canvas.height)
 	{
@@ -92,9 +100,10 @@ int	main(void)
 			++i;
 		}
 		++j;
-		// j--;
 	}
 	mlx_put_image_to_window(scene->mlx, scene->mlx_win, scene->img.img, 0, 0);
+	mlx_key_hook(scene->mlx_win, key_hook, scene);
+	mlx_hook(scene->mlx_win, 17, 0, before_exit, scene);
 	mlx_loop(scene->mlx);
     return (0);
 }

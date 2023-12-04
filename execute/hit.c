@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 16:40:45 by seoson            #+#    #+#             */
-/*   Updated: 2023/12/02 16:40:48 by seoson           ###   ########.fr       */
+/*   Updated: 2023/12/04 20:22:21 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,18 +31,17 @@ double	hit_plane(t_object *world, t_ray *ray, t_hit_record *rec)
 	parent = vector_dot(ray->direction, pl->dir);
 	if (parent < EPSILON)
 		return (0);
-	temp.x = rec->point.x -ray->origin.x;
-	temp.y = rec->point.y -ray->origin.y;
-	temp.z = rec->point.z -ray->origin.z;
+	temp.x = rec->point.x - ray->origin.x;
+	temp.y = rec->point.y - ray->origin.y;
+	temp.z = rec->point.z - ray->origin.z;
 	child = vector_dot(temp, pl->dir);
 	temp2 = child / parent;
-	if (child < 0)
-		return (0);
 	if (temp2 < rec->tmin || temp2 > rec->tmax)
 		return (0);
 	rec->t = child / parent;
 	rec->point = ray_at(ray, rec->t);
 	rec->normal = vector_normalize(pl->dir);
+	rec->albedo = pl->color;
 	return (1);
 }
 
@@ -88,17 +87,17 @@ double	hit_sphere(t_object *world, t_ray *ray, t_hit_record *rec)
 int	hit(t_object *world, t_ray *ray, t_hit_record *rec)
 {
 	int			is_hit;
-	t_hit_record temp_rec;
+	t_hit_record *temp_rec;
 
-	temp_rec = *rec;
+	temp_rec = rec;
 	is_hit = 0;
 	while (world)
 	{
-		if (hit_obj(world, ray, &temp_rec))
+		if (hit_obj(world, ray, temp_rec))
 		{
 			is_hit = 1;
-			temp_rec.tmax = temp_rec.t; //ray가 object에 hit시 tmax를 히트한 t로 바꾸어 그 다음 오브젝트 검사시에 더 멀리 있는 오브젝트는 hit가 안되도록 설정
-			*rec = temp_rec;
+			temp_rec->tmax = temp_rec->t; //ray가 object에 hit시 tmax를 히트한 t로 바꾸어 그 다음 오브젝트 검사시에 더 멀리 있는 오브젝트는 hit가 안되도록 설정
+			rec = temp_rec;
 		}
 		world = world->next;
 	}

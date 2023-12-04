@@ -6,19 +6,20 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 16:41:04 by seoson            #+#    #+#             */
-/*   Updated: 2023/12/02 20:46:51 by seoson           ###   ########.fr       */
+/*   Updated: 2023/12/04 17:12:05 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../main.h"
 
-t_canvas canvas(int width, int height)
+t_canvas canvas(int width, int height, double fov)
 {
 	t_canvas canvas;
 
 	canvas.width = width;
 	canvas.height = height;
-	canvas.aspect_ratio = 16 / 9;
+	canvas.aspect_ratio = 16.0 / 9.0;
+	canvas.fov = fov;
 	return (canvas);
 }
 
@@ -28,14 +29,13 @@ t_camera camera(t_canvas *canvas, t_point3 origin)
 
 	camera.origin = origin;
 	camera.focal_len = 1.0;
-	camera.viewport_h = 2.0;
-	camera.viewport_w = 2.0 * canvas->aspect_ratio;
+	camera.viewport_h = 2.0 * tan(canvas->fov / 360 * M_PI);
+	camera.viewport_w = camera.viewport_h * canvas->aspect_ratio;
 	camera.horizontal = vec3(camera.viewport_w, 0, 0);
 	camera.vertical = vec3(0, camera.viewport_h, 0);
 	camera.left_top.x = camera.origin.x - camera.viewport_w / 2;
 	camera.left_top.y = camera.origin.y + camera.viewport_h / 2;
 	camera.left_top.z = camera.origin.z - camera.focal_len;
-	camera.fov = 70;
 	return (camera);
 }
 

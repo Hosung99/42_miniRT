@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 15:03:18 by seoson            #+#    #+#             */
-/*   Updated: 2023/12/02 20:48:37 by seoson           ###   ########.fr       */
+/*   Updated: 2023/12/04 20:21:51 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,14 @@ t_hit_record		record_init(void)
 	return (record);
 }
 
+t_vector3	reflect(t_vector3 v, t_vector3 n)
+{
+	t_vector3 temp;
+
+	temp = vector_multiply_scala(n, 2 * vector_dot(v, n));
+	return (vector_minus_vector(v, temp));
+}
+
 t_color3	point_light_get(t_scene *scene, t_light *light)
 {
 	t_color3 diffuse;
@@ -81,6 +89,13 @@ t_color3	point_light_get(t_scene *scene, t_light *light)
 	double	brightness;
 	double	light_len;
 	t_ray	light_ray;
+
+	t_color3	specular;
+	t_vector3	view_dir;
+	t_vector3	reflect_dir;
+	double		spec;
+	double		ks;
+	double		ksn;
 
 	temp.x = light->origin.x - scene->rec.point.x; //원점에서 광원까지의 벡터
 	temp.y = light->origin.y - scene->rec.point.y;
@@ -96,10 +111,16 @@ t_color3	point_light_get(t_scene *scene, t_light *light)
 	//cos세타가 90도일때 , 0이고 세타가 둔각일 시 음수가 되므로 0.0으로 초기화해준다.
 	kd = fmax(vector_dot(scene->rec.normal, light_dir), 0.0); //두 벡터의 내적
 	diffuse = color_multiply_scala(light->light_color, kd);
+	view_dir = vector_normalize(vector_multiply_scala(scene->ray.direction, -1));
+	reflect_dir = reflect(vector_multiply_scala(light_dir, -1), scene->rec.normal);
+	ksn = 64; //shiness value
+	ks = 0.5; //specualr strength
+	spec = pow(fmax(vector_dot(view_dir,reflect_dir), 0.0), ksn);
+	specular = color_multiply_scala(color_multiply_scala(light->light_color, ks), spec);
 	brightness = light->bright_ratio * LUMEN;
 	color_temp = color_plus_color(scene->ambient, diffuse);
 	color_temp = color_multiply_scala(color_temp, brightness);
-	return (color_temp);
+	return (color_plus_color(diffuse, specular));
 }
 
 t_color3	phong_lightning(t_scene *scene)
@@ -116,9 +137,7 @@ t_color3	phong_lightning(t_scene *scene)
 		lights = lights->next;
 	}
 	light_color = color_plus_color(light_color, scene->ambient); //모든 광원에 의한 빛의 양을 구한 후
-	light_color.r = light_color.r * scene->rec.albedo.r; //object의 반사율과 곱한다.
-	light_color.g = light_color.g * scene->rec.albedo.g;
-	light_color.b = light_color.b * scene->rec.albedo.b;
+	light_color = color_multiply_color(light_color, scene->rec.albedo); //object의 색상과 곱한다.
 	return (color_min(light_color, color3(1,1,1))); //만약 광원의 합이 1보다 크면 color(1,1,1)을 반환
 }
 

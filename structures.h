@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 17:24:50 by seoson            #+#    #+#             */
-/*   Updated: 2023/12/02 17:26:00 by seoson           ###   ########.fr       */
+/*   Updated: 2023/12/04 17:10:02 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ struct s_canvas
 	int		width; //캔버스 높이
 	int		height; //캔버스 길이
 	double	aspect_ratio; //종횡비
+	double		fov; //수평시야범위
 };
 
 struct s_vector3
@@ -90,7 +91,6 @@ struct s_camera
 	t_vector3	vertical; //수직길이 벡터
 	double		focal_len; //초점거리
 	t_point3	left_top; //왼쪽위 코너점
-	double		fov; //수평시야범위
 };
 
 struct s_hit_record
