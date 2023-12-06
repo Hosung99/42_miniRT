@@ -18,6 +18,7 @@
 # define FALSE 0
 # define SP 1
 # define PL 2
+# define CY 3
 # define LIGHT_POINT 1
 # define EPSILON 1e-6
 # define LUMEN 2
@@ -107,7 +108,6 @@ struct s_hit_record
 
 struct	s_object
 {
-	int				id;
 	int				object_type;
 	void			*element;
 	void			*next;

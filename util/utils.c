@@ -28,6 +28,16 @@ t_vector3	vector_normalize(t_vector3 vec)
     return (vec);
 }
 
+t_vector3   vector_cross(t_vector3 vec1, t_vector3 vec2) //벡터 외적
+{
+    t_vector3   vec;
+
+    vec.x = vec1.y * vec2.z - vec1.z * vec2.y;
+    vec.y = vec1.z * vec2.x - vec1.x * vec2.z;
+    vec.z = vec1.x * vec2.y - vec1.y * vec2.x;
+    return (vec);
+}
+
 double	vector_dot(t_vector3 vec, t_vector3 vec2) //내적
 {
     return (vec.x * vec2.x + vec.y * vec2.y + vec.z * vec2.z);

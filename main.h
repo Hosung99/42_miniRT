@@ -32,13 +32,16 @@ int		hit_obj(t_object *obj, t_ray *ray, t_hit_record *rec);
 int	in_shadow(t_object *obj, t_ray light_ray, double light_ren);
 t_color3	point_light_get(t_scene *scene, t_light *light);
 t_color3	phong_lightning(t_scene *scene);
-double	hit_sphere(t_object *sp, t_ray *ray, t_hit_record *rec);
+int			hit_sphere(t_object *sp, t_ray *ray, t_hit_record *rec);
+int			hit_plane(t_object *world, t_ray *ray, t_hit_record *rec);
+int	hit_cylinder(t_object	*world, t_ray *ray, t_hit_record *rec, double height);
 
 t_canvas canvas(int width, int height, double fov);
 t_camera	camera(t_canvas *canvas, t_point3 origin);
 t_sphere	*sphere(t_point3 center, double radius);
 t_plane		*plane(t_vector3 dir, t_point3 point, t_color3 color);
-t_object *object(int type, void *element, t_color3 albedo, int id);
+t_cylinder *cylinder(t_point3 center, t_vector3 dir, double radius, double height);
+t_object *object(int type, void *element, t_color3 albedo);
 t_light		*light_point(t_point3 light_origin, t_color3 light_color, double bright_ratio);
 
 int    write_color(t_color3 pixel_color);

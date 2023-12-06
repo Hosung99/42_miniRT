@@ -42,19 +42,17 @@ t_scene	*scene_init(void)
 	t_object	*world;
 	t_object	*lights;
 	double		ka;
-	int			id;
 
-	id = 0;
 	scene = (t_scene *)malloc(sizeof(t_scene));
 	if (!scene)
 		return (NULL); //exit하도록 수정
 	scene->canvas = canvas(WIDTH,HEIGHT, 70);
     scene->camera = camera(&scene->canvas, point3(0, 0, 10));
-    world = object(SP, sphere(point3(0, 1, 0), 2), color3(0.5, 0, 0), id++); // world 에 구1 추가
-    oadd(&world, object(SP, sphere(point3(6, 1, 0), 2), color3(0, 0.5, 0), id++)); // world 에 구2 추가
-	oadd(&world, object(PL, plane(vec3(1, 1, 0), point3(1, 1, 0), color3(1,1,1)), color3(0,0,1), id++)); // world 에 평면 추가
+    world = object(SP, sphere(point3(0, 1, 0), 2), color3(0.5, 0, 0)); // world 에 구1 추가
+    oadd(&world, object(SP, sphere(point3(6, 1, 0), 2), color3(0, 0.5, 0))); // world 에 구2 추가
+	oadd(&world, object(PL, plane(vec3(1, 1, 0), point3(1, 1, 0), color3(1,1,1)), color3(0,0,1))); // world 에 평면 추가
     scene->world = world;
-    lights = object(LIGHT_POINT, light_point(point3(30, 30, 30), color3(1, 1, 1), 0.5), color3(0, 0, 0), id++); // 더미 albedo
+    lights = object(LIGHT_POINT, light_point(point3(30, 30, 30), color3(1, 1, 1), 0.5), color3(0, 0, 0)); // 더미 albedo
     scene->light = lights;
 	ka = 0.1;
 	scene->ambient = color_multiply_scala(color3(1,1,1), ka);

@@ -66,7 +66,7 @@ t_sphere *sphere(t_point3 center, double radius)
 	return (sphere);
 }
 
-t_object *object(int type, void *element, t_color3 albedo, int id)
+t_object *object(int type, void *element, t_color3 albedo)
 {
 	t_object *new;
 
@@ -77,7 +77,6 @@ t_object *object(int type, void *element, t_color3 albedo, int id)
 	new->element = element;
 	new->next = NULL;
 	new->albedo = albedo;
-	new->id = id;
 	return (new);
 }
 
@@ -92,4 +91,18 @@ t_light	*light_point(t_point3 light_origin, t_color3 light_color, double bright_
 	light->light_color = light_color;
 	light->bright_ratio = bright_ratio;
 	return (light);
+}
+
+t_cylinder *cylinder(t_point3 center, t_vector3 dir, double radius, double height)
+{
+	t_cylinder *cylinder;
+
+	cylinder = (t_cylinder *)malloc(sizeof(t_cylinder));
+	if (!cylinder)
+		return (NULL);
+	cylinder->center = center;
+	cylinder->dir = dir;
+	cylinder->radius = radius;
+	cylinder->height = height;
+	return (cylinder);
 }

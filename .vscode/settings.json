@@ -1,7 +1,0 @@
-{
-  "files.associations": {
-    "vector": "c",
-    "iosfwd": "c",
-    "iterator": "c"
-  }
-}
