@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 16:41:04 by seoson            #+#    #+#             */
-/*   Updated: 2023/12/04 17:12:05 by seoson           ###   ########.fr       */
+/*   Updated: 2023/12/06 18:59:17 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ t_plane *plane(t_vector3 dir, t_point3 point, t_color3 color)
 	plane = (t_plane *)malloc(sizeof(t_plane));
 	if (!plane)
 		return (NULL);
+	plane->dir = dir;
 	plane->point = point;
 	plane->color = color;
-	plane->dir = dir;
 	return (plane);
 }
 
@@ -66,7 +66,7 @@ t_sphere *sphere(t_point3 center, double radius)
 	return (sphere);
 }
 
-t_object *object(int type, void *element, t_color3 albedo)
+t_object *object(int type, void *element, t_color3 albedo, int id)
 {
 	t_object *new;
 
@@ -77,6 +77,7 @@ t_object *object(int type, void *element, t_color3 albedo)
 	new->element = element;
 	new->next = NULL;
 	new->albedo = albedo;
+	new->id = id;
 	return (new);
 }
 

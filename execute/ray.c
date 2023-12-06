@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 15:03:18 by seoson            #+#    #+#             */
-/*   Updated: 2023/12/04 20:21:51 by seoson           ###   ########.fr       */
+/*   Updated: 2023/12/06 17:25:13 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,7 @@ int	in_shadow(t_object *obj, t_ray light_ray, double light_ren)
 	rec.tmax = light_ren;
 	if (hit(obj, &light_ray, &rec))
 		return (1);
-	else
-		return (0);
+	return (0);
 }
 
 t_hit_record		record_init(void)
@@ -119,8 +118,8 @@ t_color3	point_light_get(t_scene *scene, t_light *light)
 	specular = color_multiply_scala(color_multiply_scala(light->light_color, ks), spec);
 	brightness = light->bright_ratio * LUMEN;
 	color_temp = color_plus_color(scene->ambient, diffuse);
-	color_temp = color_multiply_scala(color_temp, brightness);
-	return (color_plus_color(diffuse, specular));
+	color_temp = color_plus_color(color_temp, specular);
+	return (color_multiply_scala(color_temp, brightness));
 }
 
 t_color3	phong_lightning(t_scene *scene)

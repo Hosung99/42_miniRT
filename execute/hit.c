@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 16:40:45 by seoson            #+#    #+#             */
-/*   Updated: 2023/12/04 20:22:21 by seoson           ###   ########.fr       */
+/*   Updated: 2023/12/06 18:53:48 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,25 +23,25 @@ double	hit_plane(t_object *world, t_ray *ray, t_hit_record *rec)
 {
 	t_plane	*pl;
 	t_vector3	temp;
-	float	parent;
-	float	child;
-	float	temp2;
+	double	parent;
+	double	child;
+	double	temp2;
 
 	pl = world->element;
 	parent = vector_dot(ray->direction, pl->dir);
-	if (parent < EPSILON)
-		return (0);
-	temp.x = rec->point.x - ray->origin.x;
-	temp.y = rec->point.y - ray->origin.y;
-	temp.z = rec->point.z - ray->origin.z;
+    if (!parent) // parent가 0일 경우, 레이와 평면이 평행하므로 교차하지 않음
+        return (0);
+	temp.x = pl->point.x - ray->origin.x;
+	temp.y = pl->point.y - ray->origin.y;
+	temp.z = pl->point.z - ray->origin.z;
 	child = vector_dot(temp, pl->dir);
-	temp2 = child / parent;
+	temp2 = -child / parent;
 	if (temp2 < rec->tmin || temp2 > rec->tmax)
 		return (0);
-	rec->t = child / parent;
+	rec->t = temp2;
 	rec->point = ray_at(ray, rec->t);
-	rec->normal = vector_normalize(pl->dir);
-	rec->albedo = pl->color;
+	rec->normal = pl->dir;
+	rec->albedo = world->albedo;
 	return (1);
 }
 
@@ -113,5 +113,7 @@ int	hit_obj(t_object *world, t_ray *ray, t_hit_record *rec)
 		hit_result = hit_sphere(world, ray, rec);
 	else if (world->object_type == PL)
 		hit_result = hit_plane(world, ray, rec);
+	if (hit_result && vector_dot(ray->direction, rec->normal) > 0)
+		hit_result = 0;
 	return (hit_result);
 }

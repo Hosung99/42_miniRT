@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 17:24:50 by seoson            #+#    #+#             */
-/*   Updated: 2023/12/04 17:10:02 by seoson           ###   ########.fr       */
+/*   Updated: 2023/12/06 19:00:19 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct s_object		t_object;
 typedef struct s_light		t_light;
 typedef struct s_scene		t_scene;
 typedef struct s_plane		t_plane;
+typedef struct s_cylinder	t_cylinder;
 
 typedef struct s_data
 {
@@ -106,6 +107,7 @@ struct s_hit_record
 
 struct	s_object
 {
+	int				id;
 	int				object_type;
 	void			*element;
 	void			*next;
@@ -145,6 +147,15 @@ struct s_plane
 	t_vector3	dir; //평면의 방향벡터
 	t_point3	point; //위치
 	t_color3	color; //RGB
+};
+
+struct	s_cylinder
+{
+	t_point3	center;
+	t_vector3	dir;
+	t_color3	color;
+	double		radius;
+	double		height;
 };
 
 #endif
