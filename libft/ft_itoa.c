@@ -41,11 +41,9 @@ char	*ft_itoa(int n)
 	char		*str;
 	int			len;
 	long long	save;
-	int			i;
 
 	len = 0;
 	save = (long long)n;
-	i = 0;
 	save = calc_len(save, &len);
 	str = (char *)malloc(sizeof(char) * (len + 1));
 	if (!str)
