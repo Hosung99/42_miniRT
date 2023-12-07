@@ -117,7 +117,7 @@ int	hit_cylinder_cap(t_object *world, t_ray *ray, t_hit_record *rec, double heig
 	temp.x = oc.x - ray->origin.x;
 	temp.y = oc.y - ray->origin.y;
 	temp.z = oc.z - ray->origin.z;
-	root = vector_dot(temp, cy->dir) / vector_dot(ray->direction, cy->dir);
+	root = vector_dot(temp, cy->dir);
 	temp2.x = oc.x - ray_at(ray, root).x;
 	temp2.y = oc.y - ray_at(ray, root).y;
 	temp2.z = oc.z - ray_at(ray, root).z;
