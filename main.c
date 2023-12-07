@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 14:22:27 by seoson            #+#    #+#             */
-/*   Updated: 2023/12/06 18:56:13 by seoson           ###   ########.fr       */
+/*   Updated: 2023/12/07 14:01:43 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,55 +19,28 @@ int	before_exit(t_scene *scene)
 	exit(0);
 }
 
-int	key_hook(int keycode, t_scene *scene)
-{
-	if (keycode == ESC_CODE)
-		before_exit(scene);
-	return (0);
-}
-
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
-{
-	char	*dst;
-
-	if (x < 0 || x >= WIDTH || y < 0 || y >= HEIGHT)
-		return ;
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	*(unsigned int *)dst = color;
-}
-
 t_scene	*scene_init(void)
 {
 	t_scene 	*scene;
 	t_object	*world;
 	t_object	*lights;
-	double		ka;
 
 	scene = (t_scene *)malloc(sizeof(t_scene));
 	if (!scene)
-		return (NULL); //exit하도록 수정
+		exit(1);
 	scene->canvas = canvas(WIDTH,HEIGHT, 70);
     scene->camera = camera(&scene->canvas, point3(0, 0, 10));
-    world = object(SP, sphere(point3(0, 1, 0), 2), color3(0.5, 0, 0)); // world 에 구1 추가
+    world = object(SP, sphere(point3(-6, 1, 0), 2), color3(0.5, 0, 0)); // world 에 구1 추가
     oadd(&world, object(SP, sphere(point3(6, 1, 0), 2), color3(0, 0.5, 0))); // world 에 구2 추가
-	oadd(&world, object(PL, plane(vec3(1, 1, 0), point3(1, 1, 0), color3(1,1,1)), color3(0,0,1))); // world 에 평면 추가
+	// oadd(&world, object(PL, plane(vec3(1, 1, 0), point3(1, 1, 0), color3(1,1,1)), color3(0,0,1))); // world 에 평면 추가
+	// world = object(CY, cylinder(point3(0,-3, 0), vec3(1, 1, 0), 1, 5), color3(0, 0, 0.5));
+	oadd(&world, object(CY, cylinder(point3(0, -3, 0), vec3(1, 1, 0), 1, 5), color3(0, 0, 0.5)));
     scene->world = world;
-    lights = object(LIGHT_POINT, light_point(point3(30, 30, 30), color3(1, 1, 1), 0.5), color3(0, 0, 0)); // 더미 albedo
+    lights = object(LIGHT_POINT, light_point(point3(0, 6, 0), color3(1, 1, 1), 0.5), color3(0, 0, 0)); // 더미 albedo
     scene->light = lights;
-	ka = 0.1;
-	scene->ambient = color_multiply_scala(color3(1,1,1), ka);
+	scene->ambient_ratio = 0.1;
+	scene->ambient = color_multiply_scala(color3(1,1,1), scene->ambient_ratio);
 	return (scene);
-}
-
-
-int	write_color(t_color3 pixel_color)
-{
-	int	color;
-
-	color = (int)(pixel_color.r * 255.999) << 16;
-	color |= (int)(pixel_color.g * 255.999) << 8;
-	color |= (int)(pixel_color.b * 255.999);
-	return (color);
 }
 
 int	main(void)

@@ -1,7 +1,7 @@
 CC = cc
 CFLAGS = -Wall -Werror -Wextra
 NAME = minirt
-SRCS = main.c execute/hit.c util/object_utils.c execute/ray.c scene.c util/vector_utils.c util/utils.c execute/constructor.c util/color_utils.c util/point_utils.c
+SRCS = main.c execute/hit.c util/object_utils.c execute/ray.c scene.c util/vector_utils.c util/utils.c execute/constructor.c util/color_utils.c util/point_utils.c util/mlx_utils.c
 OBJS = $(SRCS:.c=.o)
 LIB_DIR = ./libft
 LIBFLAG = -lft -L$(LIB_DIR)

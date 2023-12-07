@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 17:24:50 by seoson            #+#    #+#             */
-/*   Updated: 2023/12/06 19:00:19 by seoson           ###   ########.fr       */
+/*   Updated: 2023/12/07 13:43:05 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,6 @@
 # define STRUCTURES_H
 
 # include "main.h"
-# define TRUE 1
-# define FALSE 0
-# define SP 1
-# define PL 2
-# define CY 3
-# define LIGHT_POINT 1
-# define EPSILON 1e-6
-# define LUMEN 2
-# define WIDTH 1920
-# define HEIGHT 1080
-# define ESC_CODE 53
 
 typedef struct s_vector3	t_vector3;
 typedef struct s_point3		t_point3;
@@ -133,6 +122,7 @@ struct  s_scene
 	t_data			img;
 	void			*mlx;
 	void			*mlx_win;
+	double			ambient_ratio;
 };
 
 struct s_sphere

@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 16:41:04 by seoson            #+#    #+#             */
-/*   Updated: 2023/12/06 18:59:17 by seoson           ###   ########.fr       */
+/*   Updated: 2023/12/07 12:39:53 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,10 @@ t_camera camera(t_canvas *canvas, t_point3 origin)
 
 	camera.origin = origin;
 	camera.focal_len = 1.0;
-	camera.viewport_h = 2.0 * tan(canvas->fov / 360 * M_PI);
-	camera.viewport_w = camera.viewport_h * canvas->aspect_ratio;
+	// camera.viewport_w = 2.0 * tan(canvas->fov / 360 * M_PI);
+	camera.viewport_w = 2.0 * tan(canvas->fov);
+	//굳이 호도법을 사용해야하나???
+	camera.viewport_h = camera.viewport_w / canvas->aspect_ratio;
 	camera.horizontal = vec3(camera.viewport_w, 0, 0);
 	camera.vertical = vec3(0, camera.viewport_h, 0);
 	camera.left_top.x = camera.origin.x - camera.viewport_w / 2;

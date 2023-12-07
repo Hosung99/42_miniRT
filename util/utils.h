@@ -12,7 +12,7 @@ t_vector3	vector_minus_vector(t_vector3 vec, t_vector3 vec2);
 t_vector3	vector_minus_scala(t_vector3 vec, double x, double y, double z);
 t_vector3	vector_normalize(t_vector3 vec);
 double		vector_dot(t_vector3 vec, t_vector3 vec2);
-t_vector3   vector_cross(t_vector3 vec1, t_vector3 vec2)
+t_vector3   vector_cross(t_vector3 vec1, t_vector3 vec2);
 double		vector_length(t_vector3 vec);
 double		vector_length_double(t_vector3 vec);
 
