@@ -148,4 +148,19 @@ struct	s_cylinder
 	double		height;
 };
 
+struct	s_calc
+{
+	double		a;
+	double		b;
+	double		c;
+	double		root;
+	double		radius;
+	double		result;
+	double		sqrt_result;
+	double		hit_height;
+	t_vector3	u;
+	t_vector3	o;
+	t_vector3	oc;
+}
+
 #endif

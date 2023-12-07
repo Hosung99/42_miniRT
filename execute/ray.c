@@ -36,9 +36,9 @@ t_point3 ray_at(t_ray *ray, double t)
 
 t_ray	ray_primary(t_camera *camera, double u, double v)
 {
-	t_ray ray;
-	t_vector3 vec;
-	t_vector3 temp;
+	t_ray		ray;
+	t_vector3	vec;
+	t_vector3	temp;
 
 	ray.origin = camera->origin;
 	temp = vector_plus_vector(vector_multiply_scala(camera->horizontal, u), vector_multiply_scala(camera->vertical, -v));

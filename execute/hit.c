@@ -43,7 +43,6 @@ t_vector3	 cylinder_normal(t_cylinder *cy, t_point3 point, double height)
 	center.x = cy->center.x + cy->dir.x * height;
 	center.y = cy->center.y + cy->dir.y * height;
 	center.z = cy->center.z + cy->dir.z * height;
-	// center = vector_plus_vector(cy->center, vector_multiply_scala(cy->dir, height));
 	normal.x = point.x - center.x;
 	normal.y = point.y - center.y;
 	normal.z = point.z - center.z;
@@ -62,10 +61,8 @@ int	hit_cylinder_side(t_object *world, t_ray *ray, t_hit_record *rec)
 	double		result;
 	double		sqrt_result;
 	double		hit_height;
-
 	t_vector3	u;
 	t_vector3	o;
-
 
 	cy = world->element;
 	u = ray->direction;
