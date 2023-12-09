@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structures.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dang-geun <dang-geun@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 17:24:50 by seoson            #+#    #+#             */
-/*   Updated: 2023/12/07 13:43:05 by seoson           ###   ########.fr       */
+/*   Updated: 2023/12/09 14:44:21 by dang-geun        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,6 +161,6 @@ struct	s_calc
 	t_vector3	u;
 	t_vector3	o;
 	t_vector3	oc;
-}
+};
 
 #endif
