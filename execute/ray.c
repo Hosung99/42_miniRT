@@ -6,7 +6,7 @@
 /*   By: Sungho <Sungho@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 15:03:18 by seoson            #+#    #+#             */
-/*   Updated: 2023/12/11 14:37:03 by Sungho           ###   ########.fr       */
+/*   Updated: 2023/12/11 16:34:26 by Sungho           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,14 @@ t_ray	ray_primary(t_camera *camera, double u, double v)
 	return (ray);
 }
 
-int	in_shadow(t_object *obj, t_ray light_ray, double light_ren)
+int	in_shadow(t_scene *scene, t_ray light_ray, double light_ren)
 {
 	t_hit_record rec;
 
 	rec.tmin = 0;
 	rec.tmax = light_ren;
-	if (hit(obj, &light_ray, &rec, -1))
+	rec.id = scene->rec.id;
+	if (hit(scene->world, &light_ray, &rec))
 		return (1);
 	return (0);
 }
@@ -66,6 +67,7 @@ t_hit_record		record_init(void)
 
 	record.tmin = EPSILON;
 	record.tmax = INFINITY;
+	record.id = -1;
 	return (record);
 }
 
@@ -104,10 +106,9 @@ t_color3	point_light_get(t_scene *scene, t_light *light)
 	point_temp.x = scene->rec.point.x + EPSILON * scene->rec.normal.x; //맞은점에서 광원까지의 벡터와 광원에서 출발하는 ray를 만들기 위해
 	point_temp.y = scene->rec.point.y + EPSILON * scene->rec.normal.y;
 	point_temp.z = scene->rec.point.z + EPSILON * scene->rec.normal.z;
-	// light_ray = ray(point_temp, temp);
-	// light_ray = ray(scene->rec.point, temp);
-	// if (in_shadow(scene->world, light_ray, light_len))
-		// return (color3(0,0,0));
+	light_ray = ray(point_temp, temp);
+	if (in_shadow(scene, light_ray, light_len))
+		return (color3(0,0,0));
 	light_dir = vector_normalize(temp); //교점에서 출발하여 광원을 향하는 벡터 (정규화한)
 	//cos세타가 90도일때 , 0이고 세타가 둔각일 시 음수가 되므로 0.0으로 초기화해준다.
 	kd = fmax(vector_dot(scene->rec.normal, light_dir), 0.0); //두 벡터의 내적
@@ -148,7 +149,7 @@ t_color3	ray_color(t_scene *scene)
 
 	scene->rec = record_init();
 	//ray의 방향벡터의 y 값을 기준으로 그라데이션을 주기 위한 계수.
-	if (hit(scene->world, &scene->ray, &scene->rec, -1))
+	if (hit(scene->world, &scene->ray, &scene->rec))
 		return (phong_lightning(scene));
 	else
 	{

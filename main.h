@@ -6,7 +6,7 @@
 /*   By: Sungho <Sungho@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 16:27:52 by marvin            #+#    #+#             */
-/*   Updated: 2023/12/11 11:00:33 by Sungho           ###   ########.fr       */
+/*   Updated: 2023/12/11 16:34:37 by Sungho           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_ray		ray(t_point3 orig, t_vector3 dir);
 t_point3	ray_at(t_ray *ray, double t);
 t_ray		ray_primary(t_camera *camera, double u, double v); //가장 처음 카메라에서 출발한ray
 t_color3	ray_color(t_scene *scene);
-int			hit(t_object *world, t_ray *ray, t_hit_record *rec, int id);
+int	hit(t_object *world, t_ray *ray, t_hit_record *rec);
 int			hit_obj(t_object *obj, t_ray *ray, t_hit_record *rec);
 int			hit_sphere(t_object *sp, t_ray *ray, t_hit_record *rec);
 int			hit_plane(t_object *world, t_ray *ray, t_hit_record *rec);
@@ -47,7 +47,7 @@ int			hit_cylinder(t_object	*world, t_ray *ray, t_hit_record *rec);
 
 t_color3	point_light_get(t_scene *scene, t_light *light);
 t_color3	phong_lightning(t_scene *scene);
-int			in_shadow(t_object *obj, t_ray light_ray, double light_ren);
+int	in_shadow(t_scene *scene, t_ray light_ray, double light_ren);
 
 t_canvas	canvas(int width, int height, double fov);
 t_camera	camera(t_canvas *canvas, t_point3 origin);

@@ -6,7 +6,7 @@
 /*   By: Sungho <Sungho@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 17:24:50 by seoson            #+#    #+#             */
-/*   Updated: 2023/12/11 11:29:41 by Sungho           ###   ########.fr       */
+/*   Updated: 2023/12/11 19:31:38 by Sungho           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ struct s_canvas
 	int		width; //캔버스 높이
 	int		height; //캔버스 길이
 	double	aspect_ratio; //종횡비
-	double		fov; //수평시야범위
+	double		fov; //수평시야범위 카메라 fov C:FOV
 };
 
 struct s_vector3
@@ -75,11 +75,12 @@ struct s_ray
 
 struct s_camera
 {
-	t_point3	origin; //카메라 위치
+	t_point3	origin; //카메라 위치 xyz view point C:XYZ
 	double		viewport_h; //뷰포트 높이
 	double		viewport_w; //뷰포트 길이
 	t_vector3	horizontal; //수평길이 벡터
 	t_vector3	vertical; //수직길이 벡터
+	t_vector3	camera_dir; //카메라 방향벡터 카메라 법선벡터 C:DIR
 	double		focal_len; //초점거리
 	t_point3	left_top; //왼쪽위 코너점
 };
@@ -92,6 +93,7 @@ struct s_hit_record
 	double		tmin; //카메라 뒷부분. t < 0
 	double		tmax; //오브젝트가 카메라보다 너무 먼경우
 	int			front_face;
+	int			id;
 	t_color3	albedo;
 };
 
@@ -106,24 +108,24 @@ struct	s_object
 
 struct s_light
 {
-	t_point3	origin;
-	t_color3	light_color;
-	double		bright_ratio;
+	t_point3	origin; // L: light point
+	t_color3	light_color; // L: light color RGB
+	double		bright_ratio; //L: brightness Ratio
 };
 
 struct  s_scene
 {
 	t_canvas		canvas;
 	t_camera		camera;
-	t_object		*world;
-	t_object		*light;
-	t_color3		ambient;
+	t_object		*world; // 도형	넣는곳
+	t_object		*light; //L 넣는곳
+	t_color3		ambient; //ambient light RGB A:RGB
 	t_ray			ray;
 	t_hit_record	rec;
 	t_data			img;
 	void			*mlx;
 	void			*mlx_win;
-	double			ambient_ratio;
+	double			ambient_ratio; //ambient lighting  A: ratio
 };
 
 struct s_sphere

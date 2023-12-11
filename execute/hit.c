@@ -6,7 +6,7 @@
 /*   By: Sungho <Sungho@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 16:40:45 by seoson            #+#    #+#             */
-/*   Updated: 2023/12/11 15:05:17 by Sungho           ###   ########.fr       */
+/*   Updated: 2023/12/11 16:34:03 by Sungho           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,12 @@ void	set_face_normal(t_ray *ray, t_hit_record *rec) //구가 카메라를 둘러
 }
 
 /* 범위 내에 맞았는지에 대한 여부 */
-int	cy_boundary(t_cylinder *cy, t_point3 point)
+double	cy_boundary(t_cylinder *cy, t_point3 point)
 {
 	t_vector3	temp;
 	double	hit_height;
 	double	max_height;
 
-	cy->dir = vector_normalize(cy->dir);
 	temp.x = point.x - cy->center.x;
 	temp.y = point.y - cy->center.y;
 	temp.z = point.z - cy->center.z;
@@ -89,13 +88,14 @@ int	hit_cylinder_side(t_object *world, t_ray *ray, t_hit_record *rec)
 			return (0);
 	}
 	hit_height = cy_boundary(cy, ray_at(ray, root));
-	if (hit_height == -1)
+	if (hit_height == -1.0)
 		return (0);
 	rec->t = root;
 	rec->point = ray_at(ray, root);
 	rec->normal = cylinder_normal(cy, rec->point, hit_height);
 	set_face_normal(ray, rec);
 	rec->albedo = world->albedo;
+	rec->id = world->id;
 	return (1);
 }
 
@@ -130,6 +130,7 @@ int	hit_cylinder_cap(t_object *world, t_ray *ray, t_hit_record *rec, double heig
 	rec->point = ray_at(ray, root);
 	rec->normal = vector_multiply_scala(cy->dir, height);
 	rec->albedo = world->albedo;
+	rec->id = world->id;
 	return (1);
 }
 
@@ -170,6 +171,7 @@ int	hit_plane(t_object *world, t_ray *ray, t_hit_record *rec)
 	rec->t = temp2;
 	rec->point = ray_at(ray, rec->t);
 	rec->normal = pl->dir;
+	rec->id = world->id;
 	rec->albedo = world->albedo;
 	return (1);
 }
@@ -209,27 +211,29 @@ int	hit_sphere(t_object *world, t_ray *ray, t_hit_record *rec)
 	rec->normal.y = (rec->point.y - sp->center.y) / sp->radius1;
 	rec->normal.z = (rec->point.z - sp->center.z) / sp->radius1;
 	set_face_normal(ray, rec);
+	rec->id = world->id;
 	rec->albedo = world->albedo;
 	return (1);
 }
 
-int	hit(t_object *world, t_ray *ray, t_hit_record *rec, int id)
+int	hit(t_object *world, t_ray *ray, t_hit_record *rec)
 {
 	int			is_hit;
 	t_hit_record *temp_rec;
+	t_object	*temp_world;
 
 	temp_rec = rec;
 	is_hit = 0;
-	(void)id;
-	while (world)
+	temp_world = world;
+	while (temp_world)
 	{
-		if (hit_obj(world, ray, temp_rec))
+		if (temp_world->id != rec->id && hit_obj(temp_world, ray, temp_rec))
 		{
 			is_hit = 1;
 			temp_rec->tmax = temp_rec->t; //ray가 object에 hit시 tmax를 히트한 t로 바꾸어 그 다음 오브젝트 검사시에 더 멀리 있는 오브젝트는 hit가 안되도록 설정
 			rec = temp_rec;
 		}
-		world = world->next;
+		temp_world = temp_world->next;
 	}
 	return (is_hit);
 }
