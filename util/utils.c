@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dang-geun <dang-geun@student.42.fr>        +#+  +:+       +#+        */
+/*   By: Sungho <Sungho@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 14:38:24 by seoson            #+#    #+#             */
-/*   Updated: 2023/12/09 21:02:47 by dang-geun        ###   ########.fr       */
+/*   Updated: 2023/12/11 11:16:04 by Sungho           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ t_vector3	vector_normalize(t_vector3 vec)
         printf("Error\n:Devider is 0");
         exit(0);
     }
-    // else if (len == 1)
-    //     return (vec);
     res.x = vec.x / len;
     res.y = vec.y / len;
     res.z = vec.z / len;

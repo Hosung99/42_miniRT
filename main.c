@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dang-geun <dang-geun@student.42.fr>        +#+  +:+       +#+        */
+/*   By: Sungho <Sungho@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 14:22:27 by seoson            #+#    #+#             */
-/*   Updated: 2023/12/10 21:43:12 by dang-geun        ###   ########.fr       */
+/*   Updated: 2023/12/11 15:08:34 by Sungho           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,15 @@ t_scene	*scene_init(void)
 	id = 0;
 	scene->canvas = canvas(WIDTH, HEIGHT, 70);
     scene->camera = camera(&scene->canvas, point3(0, 0, 10));
-    // world = object(SP, sphere(point3(-6, 1, 0), 2), color3(0.5, 0, 0)); // world 에 구1 추가
-	world = object(SP, sphere(point3(0, 0, 0), 2), color3(0.5, 0, 0), id++);
+    // world = object(SP, sphere(point3(0, 1, 0), 2), color3(0.5, 0, 0), id++); // world 에 구1 추가
+	// world = object(SP, sphere(point3(0, -6, 0), 2), color3(0.5, 0, 0), id++);
     // oadd(&world, object(SP, sphere(point3(6, 1, 0), 2), color3(0, 0.5, 0))); // world 에 구2 추가
 	// oadd(&world, object(PL, plane(vec3(1, 1, 0), point3(1, 1, 0), color3(1,1,1)), color3(0,0,1))); // world 에 평면 추가
 	// world = object(CY, cylinder(point3(0,-3, 0), vec3(1, 1, 0), 1, 5), color3(0, 0, 0.5));
-	oadd(&world, object(CY, cylinder(point3(0, -3, 0), vec3(1, 1, 1), 1, 7), color3(0, 0, 0.5), id++));
-	// world = object(CY, cylinder(point3(0, -3, 0), vec3(1, 1, 1), 1, 7), color3(0, 0, 0.5));
+	// oadd(&world, object(CY, cylinder(point3(0, 0, 0), vec3(1, 0.1, 1), 1, 7), color3(0, 0, 0.5), id++));
+	world = object(CY, cylinder(point3(0, 0, 0), vec3(1, 1, 1), 5, 3), color3(0, 0, 1), id++);
     scene->world = world;
-    lights = object(LIGHT_POINT, light_point(point3(0, 20, 0), color3(1, 1, 1), 0.5), color3(0, 0, 0)); // 더미 albedo
+    lights = object(LIGHT_POINT, light_point(point3(0, 20, 0), color3(1, 1, 1), 0.5), color3(0, 0, 0), id++); // 더미 albedo
     scene->light = lights;
 	scene->ambient_ratio = 0.1;
 	scene->ambient = color_multiply_scala(color3(1,1,1), scene->ambient_ratio);

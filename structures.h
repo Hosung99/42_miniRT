@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structures.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dang-geun <dang-geun@student.42.fr>        +#+  +:+       +#+        */
+/*   By: Sungho <Sungho@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 17:24:50 by seoson            #+#    #+#             */
-/*   Updated: 2023/12/10 21:42:21 by dang-geun        ###   ########.fr       */
+/*   Updated: 2023/12/11 11:29:41 by Sungho           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,7 @@ struct	s_cylinder
 	t_point3	center;
 	t_vector3	dir;
 	t_color3	color;
-	double		radius;
+	double		diameter;
 	double		height;
 };
 

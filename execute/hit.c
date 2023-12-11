@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hit.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dang-geun <dang-geun@student.42.fr>        +#+  +:+       +#+        */
+/*   By: Sungho <Sungho@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 16:40:45 by seoson            #+#    #+#             */
-/*   Updated: 2023/12/09 21:09:59 by dang-geun        ###   ########.fr       */
+/*   Updated: 2023/12/11 15:05:17 by Sungho           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,22 +19,25 @@ void	set_face_normal(t_ray *ray, t_hit_record *rec) //구가 카메라를 둘러
 		rec->normal = vector_multiply_scala(rec->normal, -1);
 }
 
+/* 범위 내에 맞았는지에 대한 여부 */
 int	cy_boundary(t_cylinder *cy, t_point3 point)
 {
 	t_vector3	temp;
 	double	hit_height;
 	double	max_height;
 
+	cy->dir = vector_normalize(cy->dir);
 	temp.x = point.x - cy->center.x;
 	temp.y = point.y - cy->center.y;
 	temp.z = point.z - cy->center.z;
-	hit_height = vector_dot(temp, cy->dir);
+	hit_height = fabs(vector_dot(temp, cy->dir));
 	max_height = cy->height / 2;
-	if (fabs(hit_height) > max_height)
-		return (0);
-	return (1);
+	if (hit_height > max_height)
+		return (-1);
+	return (hit_height);
 }
 
+/* 법선벡터 구하기 */
 t_vector3	 cylinder_normal(t_cylinder *cy, t_point3 point, double height)
 {
 	t_point3	center;
@@ -67,7 +70,7 @@ int	hit_cylinder_side(t_object *world, t_ray *ray, t_hit_record *rec)
 	cy = world->element;
 	u = ray->direction;
 	o = cy->dir;
-	radius = cy->radius / 2;
+	radius = cy->diameter / 2;
 	oc.x = ray->origin.x - cy->center.x;
 	oc.y = ray->origin.y - cy->center.y;
 	oc.z = ray->origin.z - cy->center.z;
@@ -86,7 +89,7 @@ int	hit_cylinder_side(t_object *world, t_ray *ray, t_hit_record *rec)
 			return (0);
 	}
 	hit_height = cy_boundary(cy, ray_at(ray, root));
-	if (!hit_height)
+	if (hit_height == -1)
 		return (0);
 	rec->t = root;
 	rec->point = ray_at(ray, root);
@@ -107,15 +110,14 @@ int	hit_cylinder_cap(t_object *world, t_ray *ray, t_hit_record *rec, double heig
 	double		diameter;
 
 	cy = world->element;
-	radius = cy->radius / 2;
-	// vector_normalize(cy->dir);
+	radius = cy->diameter / 2;
 	oc.x = cy->center.x + (cy->dir).x * height;
 	oc.y = cy->center.y + (cy->dir).y * height;
 	oc.z = cy->center.z + (cy->dir).z * height;
 	temp.x = oc.x - ray->origin.x;
 	temp.y = oc.y - ray->origin.y;
 	temp.z = oc.z - ray->origin.z;
-	root = vector_dot(temp, (cy->dir)) / vector_dot(ray->direction, (cy->dir));
+	root = vector_dot(temp, cy->dir) / vector_dot(ray->direction, cy->dir);
 	temp2.x = oc.x - ray_at(ray, root).x;
 	temp2.y = oc.y - ray_at(ray, root).y;
 	temp2.z = oc.z - ray_at(ray, root).z;
@@ -126,12 +128,7 @@ int	hit_cylinder_cap(t_object *world, t_ray *ray, t_hit_record *rec, double heig
 		return (0);
 	rec->t = root;
 	rec->point = ray_at(ray, root);
-	rec->tmax = root;
-	// if (cy->dir)
-	// 	rec->normal = cy->dir;
-	// else
-	// 	rec->normal = vector_multiply_scala(cy->dir, -1);
-	// set_face_normal(ray, rec);
+	rec->normal = vector_multiply_scala(cy->dir, height);
 	rec->albedo = world->albedo;
 	return (1);
 }
@@ -216,13 +213,14 @@ int	hit_sphere(t_object *world, t_ray *ray, t_hit_record *rec)
 	return (1);
 }
 
-int	hit(t_object *world, t_ray *ray, t_hit_record *rec)
+int	hit(t_object *world, t_ray *ray, t_hit_record *rec, int id)
 {
 	int			is_hit;
 	t_hit_record *temp_rec;
 
 	temp_rec = rec;
 	is_hit = 0;
+	(void)id;
 	while (world)
 	{
 		if (hit_obj(world, ray, temp_rec))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scene.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dang-geun <dang-geun@student.42.fr>        +#+  +:+       +#+        */
+/*   By: Sungho <Sungho@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 16:41:04 by seoson            #+#    #+#             */
-/*   Updated: 2023/12/10 21:42:38 by dang-geun        ###   ########.fr       */
+/*   Updated: 2023/12/11 12:26:52 by Sungho           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,8 @@ t_camera camera(t_canvas *canvas, t_point3 origin)
 
 	camera.origin = origin;
 	camera.focal_len = 1.0;
-	// camera.viewport_w = 2.0 * tan(canvas->fov / 360 * M_PI);
+	camera.viewport_w = 2.0 * tan(canvas->fov * M_PI / 180);
 	camera.viewport_w = 2.0 * tan(canvas->fov);
-	//굳이 호도법을 사용해야하나???
 	camera.viewport_h = camera.viewport_w / canvas->aspect_ratio;
 	camera.horizontal = vec3(camera.viewport_w, 0, 0);
 	camera.vertical = vec3(0, camera.viewport_h, 0);
@@ -50,7 +49,6 @@ t_plane *plane(t_vector3 dir, t_point3 point, t_color3 color)
 	if (!plane)
 		return (NULL);
 	plane->dir = vector_normalize(dir);
-	//확인필요해~
 	plane->point = point;
 	plane->color = color;
 	return (plane);
@@ -97,7 +95,7 @@ t_light	*light_point(t_point3 light_origin, t_color3 light_color, double bright_
 	return (light);
 }
 
-t_cylinder *cylinder(t_point3 center, t_vector3 dir, double radius, double height)
+t_cylinder *cylinder(t_point3 center, t_vector3 dir, double diameter, double height)
 {
 	t_cylinder *cylinder;
 
@@ -106,7 +104,7 @@ t_cylinder *cylinder(t_point3 center, t_vector3 dir, double radius, double heigh
 		return (NULL);
 	cylinder->center = center;
 	cylinder->dir = vector_normalize(dir);
-	cylinder->radius = radius;
+	cylinder->diameter = diameter;
 	cylinder->height = height;
 	return (cylinder);
 }
