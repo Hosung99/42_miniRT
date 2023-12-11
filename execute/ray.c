@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ray.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dang-geun <dang-geun@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 15:03:18 by seoson            #+#    #+#             */
-/*   Updated: 2023/12/06 17:25:13 by seoson           ###   ########.fr       */
+/*   Updated: 2023/12/09 22:05:54 by dang-geun        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../main.h"
-//iota i 변수 지우기.
-//원기둥이상이상
+
 //ray 생성자(정규화 된 ray)
 t_ray ray(t_point3 origin, t_vector3 dir)
 {
@@ -46,7 +45,7 @@ t_ray	ray_primary(t_camera *camera, double u, double v)
 	vec.x = camera->left_top.x + temp.x - camera->origin.x;
 	vec.y = camera->left_top.y + temp.y - camera->origin.y;
 	vec.z = camera->left_top.z + temp.z - camera->origin.z;
-	ray.direction = vec;
+	ray.direction = vector_normalize(vec);
 	return (ray);
 }
 
@@ -97,11 +96,12 @@ t_color3	point_light_get(t_scene *scene, t_light *light)
 	double		ks;
 	double		ksn;
 
-	temp.x = light->origin.x - scene->rec.point.x; //원점에서 광원까지의 벡터
+	temp.x = light->origin.x - scene->rec.point.x; //맞은점에서 광원까지의 벡터
 	temp.y = light->origin.y - scene->rec.point.y;
 	temp.z = light->origin.z - scene->rec.point.z;
-	light_len = vector_length(temp);
-	point_temp.x = scene->rec.point.x + EPSILON * scene->rec.normal.x;
+	light_len = vector_length(temp); //그 거리
+	// scene->rec.normal = vector_normalize(scene->rec.normal);
+	point_temp.x = scene->rec.point.x + EPSILON * scene->rec.normal.x; //맞은점에서 광원까지의 벡터와 광원에서 출발하는 ray를 만들기 위해
 	point_temp.y = scene->rec.point.y + EPSILON * scene->rec.normal.y;
 	point_temp.z = scene->rec.point.z + EPSILON * scene->rec.normal.z;
 	light_ray = ray(point_temp, temp);
@@ -109,6 +109,8 @@ t_color3	point_light_get(t_scene *scene, t_light *light)
 		return (color3(0,0,0));
 	light_dir = vector_normalize(temp); //교점에서 출발하여 광원을 향하는 벡터 (정규화한)
 	//cos세타가 90도일때 , 0이고 세타가 둔각일 시 음수가 되므로 0.0으로 초기화해준다.
+	// if (vector_length(scene->rec.normal) != 1)
+	// 	printf("ERROR\n");
 	kd = fmax(vector_dot(scene->rec.normal, light_dir), 0.0); //두 벡터의 내적
 	diffuse = color_multiply_scala(light->light_color, kd);
 	view_dir = vector_normalize(vector_multiply_scala(scene->ray.direction, -1));
@@ -143,7 +145,7 @@ t_color3	phong_lightning(t_scene *scene)
 
 t_color3	ray_color(t_scene *scene)
 {
-	double t;
+	// double t;
 
 	scene->rec = record_init();
 	//ray의 방향벡터의 y 값을 기준으로 그라데이션을 주기 위한 계수.
@@ -152,7 +154,8 @@ t_color3	ray_color(t_scene *scene)
 	else
 	{
 		// (1-t) * 흰색 + t * 하늘색
-		t = 0.5 * (scene->ray.direction.y + 1.0);
-		return (color_plus_color(color_multiply_scala(color3(1,1,1), 1.0-t), color_multiply_scala(color3(0.5,0.7,1.0), t)));
+		// t = 0.5 * (scene->ray.direction.y + 1.0);
+		// return (color_plus_color(color_multiply_scala(color3(1,1,1), 1.0-t), color_multiply_scala(color3(0.5,0.7,1.0), t)));
+		return (color3(0, 0, 0));
 	}
 }

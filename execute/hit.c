@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hit.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dang-geun <dang-geun@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 16:40:45 by seoson            #+#    #+#             */
-/*   Updated: 2023/12/07 13:58:51 by seoson           ###   ########.fr       */
+/*   Updated: 2023/12/09 21:09:59 by dang-geun        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	hit_cylinder_side(t_object *world, t_ray *ray, t_hit_record *rec)
 			return (0);
 	}
 	hit_height = cy_boundary(cy, ray_at(ray, root));
-	if (hit_height == 0)
+	if (!hit_height)
 		return (0);
 	rec->t = root;
 	rec->point = ray_at(ray, root);
@@ -108,29 +108,30 @@ int	hit_cylinder_cap(t_object *world, t_ray *ray, t_hit_record *rec, double heig
 
 	cy = world->element;
 	radius = cy->radius / 2;
-	oc.x = cy->center.x + cy->dir.x * height;
-	oc.y = cy->center.y + cy->dir.y * height;
-	oc.z = cy->center.z + cy->dir.z * height;
+	// vector_normalize(cy->dir);
+	oc.x = cy->center.x + (cy->dir).x * height;
+	oc.y = cy->center.y + (cy->dir).y * height;
+	oc.z = cy->center.z + (cy->dir).z * height;
 	temp.x = oc.x - ray->origin.x;
 	temp.y = oc.y - ray->origin.y;
 	temp.z = oc.z - ray->origin.z;
-	root = vector_dot(temp, cy->dir);
+	root = vector_dot(temp, (cy->dir)) / vector_dot(ray->direction, (cy->dir));
 	temp2.x = oc.x - ray_at(ray, root).x;
 	temp2.y = oc.y - ray_at(ray, root).y;
 	temp2.z = oc.z - ray_at(ray, root).z;
 	diameter = vector_length(temp2);
-	if (fabs(diameter) > radius) //왜?? 이해 필요
+	if (fabs(diameter) > fabs(radius)) //왜?? 이해 필요
 		return (0);
 	if (root < rec->tmin || root > rec->tmax)
 		return (0);
 	rec->t = root;
 	rec->point = ray_at(ray, root);
 	rec->tmax = root;
-	if (0 < height)
-		rec->normal = cy->dir;
-	else
-		rec->normal = vector_multiply_scala(cy->dir, -1);
-	set_face_normal(ray, rec); //원이 카메라를 둘러 쌈을 고려
+	// if (cy->dir)
+	// 	rec->normal = cy->dir;
+	// else
+	// 	rec->normal = vector_multiply_scala(cy->dir, -1);
+	// set_face_normal(ray, rec);
 	rec->albedo = world->albedo;
 	return (1);
 }
@@ -141,9 +142,11 @@ int	hit_cylinder(t_object	*world, t_ray *ray, t_hit_record *rec)
 	int	is_hit;
 
 	cy = world->element;
+	if (vector_dot(ray->direction, cy->dir) < 0)
+		cy->dir = vector_multiply_scala(cy->dir, -1);
 	is_hit = 0;
 	is_hit += hit_cylinder_cap(world, ray, rec, cy->height / 2);
-	is_hit += hit_cylinder_cap(world, ray, rec, -cy->height / 2);
+	is_hit += hit_cylinder_cap(world, ray, rec, -(cy->height / 2));
 	is_hit += hit_cylinder_side(world, ray, rec);
 	return (is_hit);
 }

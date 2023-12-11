@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dang-geun <dang-geun@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 14:38:24 by seoson            #+#    #+#             */
-/*   Updated: 2023/12/02 15:05:12 by seoson           ###   ########.fr       */
+/*   Updated: 2023/12/09 21:02:47 by dang-geun        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 t_vector3	vector_normalize(t_vector3 vec)
 {
+    t_vector3  res;
     double	len;
 
 	len = vector_length(vec);
@@ -22,10 +23,12 @@ t_vector3	vector_normalize(t_vector3 vec)
         printf("Error\n:Devider is 0");
         exit(0);
     }
-    vec.x /= len;
-    vec.y /= len;
-    vec.z /= len;
-    return (vec);
+    // else if (len == 1)
+    //     return (vec);
+    res.x = vec.x / len;
+    res.y = vec.y / len;
+    res.z = vec.z / len;
+    return (res);
 }
 
 t_vector3   vector_cross(t_vector3 vec1, t_vector3 vec2) //벡터 외적

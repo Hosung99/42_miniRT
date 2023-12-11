@@ -6,7 +6,7 @@
 /*   By: dang-geun <dang-geun@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 17:24:50 by seoson            #+#    #+#             */
-/*   Updated: 2023/12/09 14:44:21 by dang-geun        ###   ########.fr       */
+/*   Updated: 2023/12/10 21:42:21 by dang-geun        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ struct	s_object
 	int				object_type;
 	void			*element;
 	void			*next;
+	int				id;
 	t_color3		albedo;
 };
 

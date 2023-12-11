@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scene.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dang-geun <dang-geun@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 16:41:04 by seoson            #+#    #+#             */
-/*   Updated: 2023/12/07 12:39:53 by seoson           ###   ########.fr       */
+/*   Updated: 2023/12/10 21:42:38 by dang-geun        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ t_plane *plane(t_vector3 dir, t_point3 point, t_color3 color)
 	plane = (t_plane *)malloc(sizeof(t_plane));
 	if (!plane)
 		return (NULL);
-	plane->dir = dir;
+	plane->dir = vector_normalize(dir);
+	//확인필요해~
 	plane->point = point;
 	plane->color = color;
 	return (plane);
@@ -68,7 +69,7 @@ t_sphere *sphere(t_point3 center, double radius)
 	return (sphere);
 }
 
-t_object *object(int type, void *element, t_color3 albedo)
+t_object *object(int type, void *element, t_color3 albedo, int id)
 {
 	t_object *new;
 
@@ -79,6 +80,7 @@ t_object *object(int type, void *element, t_color3 albedo)
 	new->element = element;
 	new->next = NULL;
 	new->albedo = albedo;
+	new->id = id;
 	return (new);
 }
 
@@ -103,7 +105,7 @@ t_cylinder *cylinder(t_point3 center, t_vector3 dir, double radius, double heigh
 	if (!cylinder)
 		return (NULL);
 	cylinder->center = center;
-	cylinder->dir = dir;
+	cylinder->dir = vector_normalize(dir);
 	cylinder->radius = radius;
 	cylinder->height = height;
 	return (cylinder);

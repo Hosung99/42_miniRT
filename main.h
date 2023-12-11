@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dang-geun <dang-geun@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 16:27:52 by marvin            #+#    #+#             */
-/*   Updated: 2023/12/07 11:49:55 by seoson           ###   ########.fr       */
+/*   Updated: 2023/12/10 21:42:58 by dang-geun        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@
 # define LIGHT_POINT 1
 # define EPSILON 1e-6
 # define LUMEN 2
-# define WIDTH 1920
-# define HEIGHT 1080
+# define WIDTH 1280
+# define HEIGHT 720
 # define ESC_CODE 53
 
 t_ray		ray(t_point3 orig, t_vector3 dir);
@@ -54,7 +54,7 @@ t_camera	camera(t_canvas *canvas, t_point3 origin);
 t_sphere	*sphere(t_point3 center, double radius);
 t_plane		*plane(t_vector3 dir, t_point3 point, t_color3 color);
 t_cylinder	*cylinder(t_point3 center, t_vector3 dir, double radius, double height);
-t_object	*object(int type, void *element, t_color3 albedo);
+t_object *object(int type, void *element, t_color3 albedo, int id);
 t_light		*light_point(t_point3 light_origin, t_color3 light_color, double bright_ratio);
 
 int			write_color(t_color3 pixel_color);

@@ -16,7 +16,7 @@ all: $(NAME)
 	$(CC) $(CFLAGS) -c $^ -o $@ $(INCLUDE)
 
 $(NAME): $(OBJS)
-	make -C minilibx
+	make -j 1 -C minilibx
 	make -C $(LIB_DIR)
 	@mv ./minilibx/libmlx.dylib ./libmlx.dylib
 	$(CC) -o $@ $(OBJS) $(MLX) $(LIBFLAG)
