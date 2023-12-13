@@ -1,7 +1,7 @@
 CC = cc
 CFLAGS = -Wall -Werror -Wextra
 NAME = minirt
-SRCS = main.c execute/hit.c util/object_utils.c execute/ray.c scene.c util/vector_utils.c util/utils.c execute/constructor.c util/color_utils.c util/point_utils.c util/mlx_utils.c \
+SRCS = main.c execute/hit.c util/object_utils.c execute/ray.c scene.c util/vector_utils.c util/utils.c execute/util_constructor.c util/color_utils.c util/point_utils.c util/mlx_utils.c execute/figure_constructor.c execute/hit_figure.c util/cylinder_utils.c execute/hit_cylinder.c util/vector_utils_vector.c util/light_utils.c \
 		util/free.c \
 		parsing/check_input.c parsing/config_setting.c parsing/error.c parsing/init_scene.c \
 		parsing/set_sphere.c parsing/utils_double.c parsing/error2.c parsing/set_plane.c parsing/set_cylinder.c

@@ -6,7 +6,7 @@
 /*   By: Sungho <Sungho@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 17:24:50 by seoson            #+#    #+#             */
-/*   Updated: 2023/12/11 19:31:38 by Sungho           ###   ########.fr       */
+/*   Updated: 2023/12/13 20:39:05 by Sungho           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ typedef struct s_light		t_light;
 typedef struct s_scene		t_scene;
 typedef struct s_plane		t_plane;
 typedef struct s_cylinder	t_cylinder;
+typedef struct s_calc		t_calc;
+typedef struct s_light_calc	t_light_calc;
 
 typedef struct s_data
 {
@@ -70,7 +72,7 @@ struct s_point3
 struct s_ray
 {
 	t_point3	origin;
-	t_vector3	direction;
+	t_vector3	dir;
 };
 
 struct s_camera
@@ -78,11 +80,18 @@ struct s_camera
 	t_point3	origin; //카메라 위치 xyz view point C:XYZ
 	double		viewport_h; //뷰포트 높이
 	double		viewport_w; //뷰포트 길이
+	// t_point3	lookfrom;
+	// t_vector3	lookat;
+	// t_vector3	vup;
+	// t_vector3	u;
+	// t_vector3	v;
+	// t_vector3	w;
 	t_vector3	horizontal; //수평길이 벡터
 	t_vector3	vertical; //수직길이 벡터
-	t_vector3	camera_dir; //카메라 방향벡터 카메라 법선벡터 C:DIR
+	// t_vector3	camera_dir; //카메라 방향벡터 카메라 법선벡터 C:DIR
 	double		focal_len; //초점거리
 	t_point3	left_top; //왼쪽위 코너점
+	// t_vector3	left_top_vector; //왼쪽위 코너벡터
 };
 
 struct s_hit_record
@@ -131,15 +140,15 @@ struct  s_scene
 struct s_sphere
 {
 	t_point3	center;
-	double		radius1;
-	double		radius2;
+	double		radius;
+	double		radius_double;
 };
 
 struct s_plane
 {
-	t_vector3	dir; //평면의 방향벡터
-	t_point3	point; //위치
-	t_color3	color; //RGB
+	t_vector3	dir;
+	t_point3	point;
+	t_color3	color;
 };
 
 struct	s_cylinder
@@ -153,17 +162,40 @@ struct	s_cylinder
 
 struct	s_calc
 {
+	t_object	*element;
 	double		a;
 	double		b;
 	double		c;
 	double		root;
 	double		radius;
+	double		diameter;
 	double		result;
 	double		sqrt_result;
 	double		hit_height;
-	t_vector3	u;
-	t_vector3	o;
-	t_vector3	oc;
+	double		denominator;
+	double		molecule;
+	t_vector3	vector;
+	t_vector3	vector_temp;
+};
+
+struct	s_light_calc
+{
+	t_color3	diffuse;
+	t_color3	color_temp;
+	t_vector3	light_dir;
+	t_vector3	temp;
+	t_point3	point_temp;
+	double		kd;
+	double		brightness;
+	double		light_len;
+	t_ray		light_ray;
+	t_vector3	light_ray_vector;
+	t_color3	specular;
+	t_vector3	view_dir;
+	t_vector3	reflect_dir;
+	double		spec;
+	double		ks;
+	double		ksn;
 };
 
 #endif

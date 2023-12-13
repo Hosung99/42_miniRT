@@ -6,7 +6,7 @@
 /*   By: Sungho <Sungho@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 14:38:24 by seoson            #+#    #+#             */
-/*   Updated: 2023/12/11 11:16:04 by Sungho           ###   ########.fr       */
+/*   Updated: 2023/12/12 15:15:15 by Sungho           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 t_vector3	vector_normalize(t_vector3 vec)
 {
-    t_vector3  res;
-    double	len;
+    t_vector3   res;
+    double      len;
 
 	len = vector_length(vec);
     if (len == 0)
@@ -29,7 +29,7 @@ t_vector3	vector_normalize(t_vector3 vec)
     return (res);
 }
 
-t_vector3   vector_cross(t_vector3 vec1, t_vector3 vec2) //벡터 외적
+t_vector3   vector_cross(t_vector3 vec1, t_vector3 vec2)
 {
     t_vector3   vec;
 
@@ -39,12 +39,12 @@ t_vector3   vector_cross(t_vector3 vec1, t_vector3 vec2) //벡터 외적
     return (vec);
 }
 
-double	vector_dot(t_vector3 vec, t_vector3 vec2) //내적
+double	vector_dot(t_vector3 vec, t_vector3 vec2)
 {
     return (vec.x * vec2.x + vec.y * vec2.y + vec.z * vec2.z);
 }
 
-double	vector_length_double(t_vector3 vec) //벡터 크기의 제곱
+double	vector_length_double(t_vector3 vec)
 {
     return (vec.x * vec.x + vec.y * vec.y + vec.z * vec.z);
 }

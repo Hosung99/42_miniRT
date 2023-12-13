@@ -6,7 +6,7 @@
 /*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 00:59:23 by sgo               #+#    #+#             */
-/*   Updated: 2023/12/13 19:57:15 by sgo              ###   ########.fr       */
+/*   Updated: 2023/12/13 21:09:56 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	set_camera(t_scene *scene, char **array)
 		wrong_range(FOV);
 	// ============================
 	scene->canvas = canvas(WIDTH, HEIGHT, 70);
-    scene->camera = camera(&scene->canvas, point3(0, 0, 10));
+    scene->camera = camera(&scene->canvas, point3(0, 0, 15), vec3(0,0,1));
 }
 
 void	add_light(t_scene *scene, char **light_p, char *ratio, char **rgb, int *id)
