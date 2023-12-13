@@ -28,4 +28,6 @@ t_point3	point_multiply_scala(t_point3 vec, double t);
 t_object	*olast(t_object *list);
 void		oadd(t_object **list, t_object *new);
 
+void		free_array(char **array);
+void		ft_free(char *tmp);
 #endif
