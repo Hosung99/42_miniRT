@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seoson <seoson@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 16:09:16 by seoson            #+#    #+#             */
-/*   Updated: 2023/04/13 15:51:47 by seoson           ###   ########.fr       */
+/*   Updated: 2023/12/12 23:30:10 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static int	check_back(char const *s1, char const *set)
 	return (i);
 }
 
-char	*ft_strtrim(char const *s1, char const *set)
+char	*ft_strtrim(char *s1, char const *set)
 {
 	int		front_index;
 	int		back_index;
@@ -76,5 +76,7 @@ char	*ft_strtrim(char const *s1, char const *set)
 	while (front_index <= back_index)
 		str[i++] = s1[front_index++];
 	str[i] = '\0';
+	free(s1);
+	s1 = NULL;
 	return (str);
 }

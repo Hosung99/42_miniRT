@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scene.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Sungho <Sungho@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 16:41:04 by seoson            #+#    #+#             */
-/*   Updated: 2023/12/11 12:26:52 by Sungho           ###   ########.fr       */
+/*   Updated: 2023/12/13 18:09:45 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ t_camera camera(t_canvas *canvas, t_point3 origin)
 }
 
 
-t_plane *plane(t_vector3 dir, t_point3 point, t_color3 color)
+t_plane *plane(t_vector3 dir, t_point3 point)
 {
 	t_plane *plane;
 
@@ -50,7 +50,6 @@ t_plane *plane(t_vector3 dir, t_point3 point, t_color3 color)
 		return (NULL);
 	plane->dir = vector_normalize(dir);
 	plane->point = point;
-	plane->color = color;
 	return (plane);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 15:14:23 by seoson            #+#    #+#             */
-/*   Updated: 2023/06/15 11:21:45 by seoson           ###   ########.fr       */
+/*   Updated: 2023/12/12 23:31:01 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # include <stdlib.h>
 # include <unistd.h>
 # define LIBFT_H
+
+# define BUFFER_SIZE 42
 
 typedef struct s_list
 {
@@ -46,7 +48,7 @@ char			*ft_strnstr(const char *haystack, const char *needle, \
 char			*ft_strdup(const char *s1);
 char			*ft_substr(char const *s, unsigned int start, size_t len);
 char			*ft_strjoin(char const *s1, char const *s2);
-char			*ft_strtrim(char const *s1, char const *set);
+char			*ft_strtrim(char *s1, char const *set);
 char			**ft_split(char const *s, char c);
 int				ft_atoi(const char *nptr);
 void			*ft_calloc(size_t nmemb, size_t size);
@@ -67,4 +69,6 @@ void			ft_lstclear(t_list **lst, void (*del)(void *));
 void			ft_lstiter(t_list *lst, void (*f)(void *));
 t_list			*ft_lstmap(t_list *lst, void *(*f)(void *), \
 		void (*del)(void *));
+char			*get_next_line(int fd);
+		
 #endif

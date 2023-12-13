@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Sungho <Sungho@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 16:27:52 by marvin            #+#    #+#             */
-/*   Updated: 2023/12/11 16:34:37 by Sungho           ###   ########.fr       */
+/*   Updated: 2023/12/13 18:10:28 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	in_shadow(t_scene *scene, t_ray light_ray, double light_ren);
 t_canvas	canvas(int width, int height, double fov);
 t_camera	camera(t_canvas *canvas, t_point3 origin);
 t_sphere	*sphere(t_point3 center, double radius);
-t_plane		*plane(t_vector3 dir, t_point3 point, t_color3 color);
+t_plane		*plane(t_vector3 dir, t_point3 point);
 t_cylinder	*cylinder(t_point3 center, t_vector3 dir, double radius, double height);
 t_object *object(int type, void *element, t_color3 albedo, int id);
 t_light		*light_point(t_point3 light_origin, t_color3 light_color, double bright_ratio);
@@ -61,5 +61,8 @@ int			write_color(t_color3 pixel_color);
 int			key_hook(int keycode, t_scene *scene);
 void		my_mlx_pixel_put(t_data *data, int x, int y, int color);
 int			before_exit(t_scene *scene);
+
+void		check_input(int argc, char *argv[]);
+t_scene 	*init_scene(char *argv[]);
 
 #endif
