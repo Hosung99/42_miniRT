@@ -6,7 +6,7 @@
 /*   By: Sungho <Sungho@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 16:27:52 by marvin            #+#    #+#             */
-/*   Updated: 2023/12/14 15:19:04 by Sungho           ###   ########.fr       */
+/*   Updated: 2023/12/14 15:23:46 by Sungho           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,5 +77,8 @@ int			key_hook(int keycode, t_scene *scene);
 void		my_mlx_pixel_put(t_data *data, int x, int y, int color);
 int			before_exit(t_scene *scene);
 void		free_all(t_scene *scene);
+
+void		check_input(int argc, char *argv[]);
+t_scene 	*init_scene(char *argv[]);
 
 #endif
