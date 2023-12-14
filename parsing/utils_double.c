@@ -6,7 +6,7 @@
 /*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 02:27:14 by sgo               #+#    #+#             */
-/*   Updated: 2023/12/13 20:07:42 by sgo              ###   ########.fr       */
+/*   Updated: 2023/12/14 13:15:02 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	check_dot(char *str)
 
 	i = 0;
 	dot = 0;
+	if (str[i] == '.')
+		return (1);
 	while (str[i])
 	{
 		if (str[i] == '.')
@@ -59,7 +61,7 @@ double	ft_stod(char *str)
 		wrong_double_input();
 	split = ft_split(str, '.');
 	natural_num = ft_atol(split[0]);
-	printf("sgotest natural num %f\n", natural_num);
+	// printf("sgotest natural num %f\n", natural_num);
 	if (array_len(split) == 1)
 	{
 		free_array(split);

@@ -6,7 +6,7 @@
 /*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 20:37:28 by sgo               #+#    #+#             */
-/*   Updated: 2023/12/13 19:40:21 by sgo              ###   ########.fr       */
+/*   Updated: 2023/12/14 10:23:28 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ t_scene *init_scene(char *argv[])
 	}
 	return (scene);
 }
-
 
 void	set_by_type(t_scene *scene, char *line, int *id)
 {
