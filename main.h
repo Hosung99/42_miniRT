@@ -6,7 +6,7 @@
 /*   By: Sungho <Sungho@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 16:27:52 by marvin            #+#    #+#             */
-/*   Updated: 2023/12/13 18:08:36 by Sungho           ###   ########.fr       */
+/*   Updated: 2023/12/14 15:19:04 by Sungho           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,14 @@
 # define WIDTH 1280
 # define HEIGHT 720
 # define ESC_CODE 53
+# define KEY_LEFT_ARROW 123
+# define KEY_RIGHT_ARROW 124
+# define KEY_DOWN_ARROW 125
+# define KEY_UP_ARROW 126
+# define KEY_W	13
+# define KEY_A	0
+# define KEY_S	1
+# define KEY_D	2
 
 t_ray		ray(t_point3 orig, t_vector3 dir);
 t_point3	ray_at(t_ray *ray, double t);
