@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   scene.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Sungho <Sungho@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 16:41:04 by seoson            #+#    #+#             */
 /*   Updated: 2023/12/13 21:43:41 by Sungho           ###   ########.fr       */
@@ -62,6 +62,31 @@ t_camera	camera(t_canvas *canvas, t_point3 origin, t_vector3 dir)
 	camera.left_top_vector = get_left_top_vector(&camera);
 	return (camera);
 }
+
+// t_plane *plane(t_vector3 dir, t_point3 point)
+// {
+// 	t_plane *plane;
+
+// 	plane = (t_plane *)malloc(sizeof(t_plane));
+// 	if (!plane)
+// 		return (NULL);
+// 	plane->dir = vector_normalize(dir);
+// 	plane->point = point;
+// 	return (plane);
+// }
+
+// t_sphere *sphere(t_point3 center, double radius)
+// {
+// 	t_sphere *sphere;
+
+// 	sphere = (t_sphere *)malloc(sizeof(t_sphere));
+// 	if (!sphere)
+// 		return (NULL);
+// 	sphere->center = center;
+// 	sphere->radius = radius;
+// 	sphere->radius_double = radius * radius;
+// 	return (sphere);
+// }
 
 t_object *object(int type, void *element, t_color3 albedo, int id)
 {

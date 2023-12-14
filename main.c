@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Sungho <Sungho@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 14:22:27 by seoson            #+#    #+#             */
-/*   Updated: 2023/12/13 21:45:05 by Sungho           ###   ########.fr       */
+/*   Updated: 2023/12/14 13:49:12 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,12 @@ void	draw(t_scene *scene)
 	}
 }
 
-int	main(void)
+int	main(int argc, char *argv[])
 {
 	t_scene		*scene;
 
+	check_input(argc, argv);
+	// scene = init_scene(argv);
 	scene = scene_init();
 	scene->mlx = mlx_init();
 	scene->mlx_win = mlx_new_window(scene->mlx, WIDTH, HEIGHT, "miniRT");

@@ -1,31 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   error2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/18 11:28:03 by seoson            #+#    #+#             */
-/*   Updated: 2023/12/12 00:44:59 by sgo              ###   ########.fr       */
+/*   Created: 2023/12/13 01:21:34 by sgo               #+#    #+#             */
+/*   Updated: 2023/12/13 01:26:58 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "parsing.h"
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
+void	error_invalid_input(int type)
 {
-	size_t	i;
-
-	i = 0;
-	if (n == 0)
-		return (0);
-	while (i < n && s1[i] && s2[i])
-	{
-		if (s1[i] != s2[i])
-			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
-		i++;
-	}
-	if (i == n)
-		i--;
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+	if (type == COLOR)
+		ft_putstr_fd("Error\nInvalid color input\n", 2);
+	else if (type == RATIO)
+		ft_putstr_fd("Error\nInvalid ratio input\n", 2);
+	else if (type == VECTOR)
+		ft_putstr_fd("Error\nInvalid vector input\n", 2);
+	else
+		ft_putstr_fd("Error\nInvalid input\n", 2);
+	exit(1);
 }
