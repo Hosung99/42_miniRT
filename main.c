@@ -6,7 +6,7 @@
 /*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 14:22:27 by seoson            #+#    #+#             */
-/*   Updated: 2023/12/13 21:08:41 by sgo              ###   ########.fr       */
+/*   Updated: 2023/12/14 13:49:12 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_scene	*scene_init(void)
 		exit(1);
 	id = 0;
 	scene->canvas = canvas(WIDTH, HEIGHT, 70);
-    scene->camera = camera(&scene->canvas, point3(0, 0, 15), vec3(0,0,1));
+    scene->camera = camera(&scene->canvas, point3(0, 0, 10), vec3(0,0,-1));//vec3에 camera방향벡터 넣으세용
     // world = object(SP, sphere(point3(0, 1, 0), 2), color3(0.5, 0, 0), id++); // world 에 구1 추가
 	// world = object(SP, sphere(point3(0, -4, 2), 2), color3(0.5, 0, 0), id++);
     // oadd(&world, object(SP, sphere(point3(6, 1, 0), 2), color3(0, 0.5, 0))); // world 에 구2 추가
@@ -35,7 +35,7 @@ t_scene	*scene_init(void)
     scene->world = world;
 	// oadd(&world, object(SP, sphere(point3(0, -3, 0), 1), color3(0, 0, 1), id++));
     lights = object(LIGHT_POINT, light_point(point3(0, 20, 0), color3(1, 1, 1), 0.5), color3(0, 0, 0), id++);
-	oadd(&lights, object(LIGHT_POINT, light_point(point3(10, 10, 0), color3(1, 1, 1), 0.5), color3(0, 0, 0), id++));
+	// oadd(&lights, object(LIGHT_POINT, light_point(point3(10, 10, 0), color3(1, 1, 1), 0.5), color3(0, 0, 0), id++));
     scene->light = lights;
 	scene->ambient_ratio = 0.1;
 	scene->ambient = color_multiply_scala(color3(1,1,1), scene->ambient_ratio);

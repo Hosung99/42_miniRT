@@ -29,6 +29,7 @@ t_point3	point_plus_point(t_point3 vec, t_point3 vec2);
 t_vector3	point_plus_vector(t_point3 point, t_vector3 vec);
 t_vector3	point_minus_point(t_point3 vec, t_point3 vec2);
 t_vector3	point_divide_scala(t_point3 point, double t);
+t_vector3   point_minus_vector(t_point3 point, t_vector3 vec);
 t_point3	point_multiply_scala(t_point3 vec, double t);
 t_object	*olast(t_object *list);
 void		oadd(t_object **list, t_object *new);
