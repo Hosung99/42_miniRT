@@ -18,7 +18,7 @@ void	add_sphere(t_scene *scene, char **center, char *diameter, char **rgb, int *
 
 	world = object(SP, sphere(point3(ft_stod(center[0]), ft_stod(center[1]), ft_stod(center[2])), \
 			ft_stod(diameter)), \
-			color3(ft_stod(rgb[0]) / 255, ft_stod(rgb[1]) / 255, ft_stod(rgb[2]) / 255), *id++);
+			color3(ft_stod(rgb[0]) / 255, ft_stod(rgb[1]) / 255, ft_stod(rgb[2]) / 255), (*id)++);
 	if (scene->world == NULL)
 		scene->world = world;
 	else

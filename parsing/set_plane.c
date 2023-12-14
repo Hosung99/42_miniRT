@@ -33,7 +33,7 @@ void	set_plane(t_scene *scene, char **array, int *id)
 	// todo 왜 plane은 color를 plane에 넣는가?
 	world = object(PL, plane(vec3(ft_stod(vector[0]), ft_stod(vector[1]), ft_stod(vector[2])), \
 			point3(ft_stod(point[0]), ft_stod(point[1]), ft_stod(point[2]))), \
-			color3(ft_stod(rgb[0]) / 255, ft_stod(rgb[1]) / 255, ft_stod(rgb[2]) / 255), *id++);
+			color3(ft_stod(rgb[0]) / 255, ft_stod(rgb[1]) / 255, ft_stod(rgb[2]) / 255), (*id)++);
 	if (scene->world == NULL)
 		scene->world = world;
 	else

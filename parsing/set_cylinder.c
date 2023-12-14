@@ -31,7 +31,12 @@ void	set_cylinder(t_scene *scene, char **array, int *id)
 	world = object(CY, cylinder(point3(ft_stod(center[0]), ft_stod(center[1]), ft_stod(center[2])), \
 			vec3(ft_stod(vector[0]), ft_stod(vector[1]), ft_stod(vector[2])), \
 			ft_stod(array[3]), ft_stod(array[4])), \
-			color3(ft_stod(rgb[0]) / 255, ft_stod(rgb[1]) / 255, ft_stod(rgb[2]) / 255), *id++);
+			color3(ft_stod(rgb[0]) / 255, ft_stod(rgb[1]) / 255, ft_stod(rgb[2]) / 255), (*id)++);
+	printf("sgotes world : CY cylinder(point3(%lf, %lf, %lf), vec3(%lf, %lf, %lf), %lf, %lf)), color3(%lf, %lf, %lf), %d++);\n", \
+			ft_stod(center[0]), ft_stod(center[1]), ft_stod(center[2]), \
+			ft_stod(vector[0]), ft_stod(vector[1]), ft_stod(vector[2]), \
+			ft_stod(array[3]), ft_stod(array[4]), \
+			ft_stod(rgb[0]) / 255, ft_stod(rgb[1]) / 255, ft_stod(rgb[2]) / 255, *id);
 	if (scene->world == NULL)
 		scene->world = world;
 	else
