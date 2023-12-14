@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "parsing.h"
+void	get_lines(int fd, t_scene *scene);
 
 void	set_scene_null(t_scene *scene)
 {
@@ -24,15 +25,21 @@ t_scene *init_scene(char *argv[])
 {
 	int 	fd;
 	char 	*line;
-	int 	id;
 	t_scene *scene;
 
-	id = 0;
 	fd = open(argv[1], O_RDONLY);
 	if (fd == -1)
 		error_open_file();
 	scene = (t_scene *)malloc(sizeof(t_scene));
 	set_scene_null(scene);
+	get_lines(fd, scene);
+	return (scene);
+}
+void	get_lines(int fd, t_scene *scene)
+{
+	int		id;
+	char	*line;
+
 	line = get_next_line(fd);
 	while (line)
 	{
@@ -47,7 +54,6 @@ t_scene *init_scene(char *argv[])
 		free(line);
 		line = get_next_line(fd);
 	}
-	return (scene);
 }
 
 void	set_by_type(t_scene *scene, char *line, int *id)

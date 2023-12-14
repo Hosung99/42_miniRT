@@ -48,17 +48,12 @@ void	set_camera(t_scene *scene, char **array)
 	vector = ft_split(array[2], ',');
 	check_vector(vector);
 	fov = ft_stod(array[3]);
-	printf("sgotest camera: fov = %lf\n", fov);
 	if (fov < 0 || fov > 180)
 		wrong_range(FOV);
-	// ============================
 	scene->canvas = canvas(WIDTH, HEIGHT, fov);
     scene->camera = camera(&scene->canvas, \
 	point3(ft_stod(point[0]), ft_stod(point[1]), ft_stod(point[2])), \
 	vec3(ft_stod(vector[0]), ft_stod(vector[1]), ft_stod(vector[2])));
-	printf("sgotest camera: scene->camera = camera(&scene->canvas, point3(%lf, %lf, %lf), vec3(%lf, %lf, %lf)));\n", \
-		ft_stod(point[0]), ft_stod(point[1]), ft_stod(point[2]), \
-		ft_stod(vector[0]), ft_stod(vector[1]), ft_stod(vector[2]));
 }
 
 void	add_light(t_scene *scene, char **light_p, char *ratio, char **rgb, int *id)
@@ -70,10 +65,6 @@ void	add_light(t_scene *scene, char **light_p, char *ratio, char **rgb, int *id)
 			color3(ft_stod(rgb[0]) / 255, ft_stod(rgb[1]) / 255, ft_stod(rgb[2]) / 255), \
 			ft_stod(ratio)), \
 			color3(0, 0, 0), (*id)++);
-	printf("sgotest : add_light: object(LIGHT_POINT, light_point(point3(%lf, %lf, %lf)), color3(%lf, %lf, %lf), %lf), color3(0, 0, 0), %d++);\n", \
-			ft_stod(light_p[0]), ft_stod(light_p[1]), ft_stod(light_p[2]), \
-			ft_stod(rgb[0]) / 255, ft_stod(rgb[1]) / 255, ft_stod(rgb[2]) / 255, \
-			ft_stod(ratio), *id);
 	if (scene->light == NULL)
 		scene->light = obj;
 	else
