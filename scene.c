@@ -6,7 +6,7 @@
 /*   By: Sungho <Sungho@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 16:41:04 by seoson            #+#    #+#             */
-/*   Updated: 2023/12/13 20:39:07 by Sungho           ###   ########.fr       */
+/*   Updated: 2023/12/13 21:43:41 by Sungho           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,50 +23,43 @@ t_canvas	canvas(int width, int height, double fov)
 	return (canvas);
 }
 
-// t_vector3	get_left_top_vector(t_camera *camera)
-// {
-// 	t_vector3	res;
+t_vector3	get_left_top_vector(t_camera *camera)
+{
+	t_vector3	res;
 
-// 	res.x = camera->origin.x + (-camera->horizontal.x / 2) + (camera->vertical.x / 2) - camera->focal_len * camera->w.x;
-// 	res.y = camera->origin.y + (-camera->horizontal.y / 2) + (camera->vertical.y / 2) - camera->focal_len * camera->w.y;
-// 	res.z = camera->origin.z + (-camera->horizontal.z / 2) + (camera->vertical.z / 2) - camera->focal_len * camera->w.z;
-	// camera.left_top.x = camera.origin.x - camera.viewport_w / 2;
-	// camera.left_top.y = camera.origin.y + camera.viewport_h / 2;
-	// camera.left_top.z = camera.origin.z - camera.focal_len;
-// 	return (res);
-// }
+	res.x = camera->origin.x + (-camera->horizontal.x / 2) + \
+		(camera->vertical.x / 2) - camera->focal_len * camera->w.x;
+	res.y = camera->origin.y + (-camera->horizontal.y / 2) + \
+		(camera->vertical.y / 2) - camera->focal_len * camera->w.y;
+	res.z = camera->origin.z + (-camera->horizontal.z / 2) + \
+		(camera->vertical.z / 2) - camera->focal_len * camera->w.z;
+	return (res);
+}
 
 t_camera	camera(t_canvas *canvas, t_point3 origin, t_vector3 dir)
 {
 	t_camera	camera;
 
-	// camera.camera_dir = vector_normalize(dir);
-	(void)dir;
+	camera.camera_dir = vector_normalize(dir);
 	camera.origin = origin;
-	camera.focal_len = 1.0;
+	// camera.focal_len = 1.0;
+	// camera.horizontal = vec3(camera.viewport_w, 0, 0);
+	// camera.vertical = vec3(0, camera.viewport_h, 0);
+	// camera.left_top.x = camera.origin.x - camera.viewport_w / 2;
+	// camera.left_top.y = camera.origin.y + camera.viewport_h / 2;
+	// camera.left_top.z = camera.origin.z - camera.focal_len;
+	camera.lookfrom = camera.origin;
+	camera.lookat = point_plus_vector(camera.lookfrom, camera.camera_dir);
+	camera.vup = vec3(0, 1, 0);
+	camera.focal_len = vector_length(point_minus_vector(camera.lookfrom, camera.lookat));
 	camera.viewport_w = 2.0 * tan(canvas->fov * M_PI / 360);
 	camera.viewport_h = camera.viewport_w / canvas->aspect_ratio;
-	camera.horizontal = vec3(camera.viewport_w, 0, 0);
-	camera.vertical = vec3(0, camera.viewport_h, 0);
-	camera.left_top.x = camera.origin.x - camera.viewport_w / 2;
-	camera.left_top.y = camera.origin.y + camera.viewport_h / 2;
-	camera.left_top.z = camera.origin.z - camera.focal_len;
-	// camera.lookfrom = camera.origin;
-	// camera.lookat = point_plus_vector(camera.lookfrom, camera.camera_dir);
-	// camera.vup = vec3(0, 1, 0);x
-	// camera.focal_len = vector_length(vector_minus_point(camera.lookat, camera.lookfrom));
-	// camera.w = vector_normalize(vector_minus_point(camera.lookat, camera.lookfrom));
-	// camera.u = vector_normalize(vector_cross(camera.vup, camera.w));
-	// camera.v = vector_multiply_scala(vector_cross(camera.w, camera.u), -1);
-	// camera.horizontal = vector_multiply_scala(camera.u, camera.viewport_w);
-	// camera.vertical = vector_multiply_scala(camera.v, camera.viewport_h);
-	// camera.left_top_vector = get_left_top_vector(&camera);
-	// printf("camera.left_top_vector.x : %f\n", camera.left_top_vector.x);
-	// printf("camera.left_top_vector.y : %f\n", camera.left_top_vector.y);
-	// printf("camera.left_top_vector.z : %f\n", camera.left_top_vector.z);
-	printf("camera.left_top.x : %f\n", camera.left_top.x);
-	printf("camera.left_top.y : %f\n", camera.left_top.y);
-	printf("camera.left_top.z : %f\n", camera.left_top.z);
+	camera.w = vector_normalize(point_minus_vector(camera.lookfrom, camera.lookat));
+	camera.u = vector_normalize(vector_cross(camera.vup, camera.w));
+	camera.v = vector_cross(camera.w, camera.u);
+	camera.horizontal = vector_multiply_scala(camera.u, camera.viewport_w);
+	camera.vertical = vector_multiply_scala(camera.v, camera.viewport_h);
+	camera.left_top_vector = get_left_top_vector(&camera);
 	return (camera);
 }
 

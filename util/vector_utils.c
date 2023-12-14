@@ -6,7 +6,7 @@
 /*   By: Sungho <Sungho@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 14:37:32 by seoson            #+#    #+#             */
-/*   Updated: 2023/12/12 19:58:35 by Sungho           ###   ########.fr       */
+/*   Updated: 2023/12/13 21:00:20 by Sungho           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,16 @@ t_vector3   vector_minus_point(t_vector3 vec, t_point3 point)
     res.x = vec.x - point.x;
     res.y = vec.y - point.y;
     res.z = vec.z - point.z;
+    return (res);
+}
+
+t_vector3   point_minus_vector(t_point3 point, t_vector3 vec)
+{
+    t_vector3   res;
+
+    res.x = point.x - vec.x;
+    res.y = point.y - vec.y;
+    res.z = point.z - vec.z;
     return (res);
 }
 
