@@ -61,7 +61,6 @@ double	ft_stod(char *str)
 		wrong_double_input();
 	split = ft_split(str, '.');
 	natural_num = ft_atol(split[0]);
-	// printf("sgotest natural num %f\n", natural_num);
 	if (array_len(split) == 1)
 	{
 		free_array(split);
