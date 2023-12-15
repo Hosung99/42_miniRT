@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scene.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: Sungho <Sungho@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 16:41:04 by seoson            #+#    #+#             */
-/*   Updated: 2023/12/13 21:43:41 by Sungho           ###   ########.fr       */
+/*   Updated: 2023/12/15 14:19:05 by Sungho           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,19 +42,15 @@ t_camera	camera(t_canvas *canvas, t_point3 origin, t_vector3 dir)
 
 	camera.camera_dir = vector_normalize(dir);
 	camera.origin = origin;
-	// camera.focal_len = 1.0;
-	// camera.horizontal = vec3(camera.viewport_w, 0, 0);
-	// camera.vertical = vec3(0, camera.viewport_h, 0);
-	// camera.left_top.x = camera.origin.x - camera.viewport_w / 2;
-	// camera.left_top.y = camera.origin.y + camera.viewport_h / 2;
-	// camera.left_top.z = camera.origin.z - camera.focal_len;
 	camera.lookfrom = camera.origin;
 	camera.lookat = point_plus_vector(camera.lookfrom, camera.camera_dir);
 	camera.vup = vec3(0, 1, 0);
-	camera.focal_len = vector_length(point_minus_vector(camera.lookfrom, camera.lookat));
+	camera.focal_len = vector_length\
+		(point_minus_vector(camera.lookfrom, camera.lookat));
 	camera.viewport_w = 2.0 * tan(canvas->fov * M_PI / 360);
 	camera.viewport_h = camera.viewport_w / canvas->aspect_ratio;
-	camera.w = vector_normalize(point_minus_vector(camera.lookfrom, camera.lookat));
+	camera.w = vector_normalize\
+		(point_minus_vector(camera.lookfrom, camera.lookat));
 	camera.u = vector_normalize(vector_cross(camera.vup, camera.w));
 	camera.v = vector_cross(camera.w, camera.u);
 	camera.horizontal = vector_multiply_scala(camera.u, camera.viewport_w);
@@ -62,31 +58,6 @@ t_camera	camera(t_canvas *canvas, t_point3 origin, t_vector3 dir)
 	camera.left_top_vector = get_left_top_vector(&camera);
 	return (camera);
 }
-
-// t_plane *plane(t_vector3 dir, t_point3 point)
-// {
-// 	t_plane *plane;
-
-// 	plane = (t_plane *)malloc(sizeof(t_plane));
-// 	if (!plane)
-// 		return (NULL);
-// 	plane->dir = vector_normalize(dir);
-// 	plane->point = point;
-// 	return (plane);
-// }
-
-// t_sphere *sphere(t_point3 center, double radius)
-// {
-// 	t_sphere *sphere;
-
-// 	sphere = (t_sphere *)malloc(sizeof(t_sphere));
-// 	if (!sphere)
-// 		return (NULL);
-// 	sphere->center = center;
-// 	sphere->radius = radius;
-// 	sphere->radius_double = radius * radius;
-// 	return (sphere);
-// }
 
 t_object *object(int type, void *element, t_color3 albedo, int id)
 {
@@ -103,7 +74,8 @@ t_object *object(int type, void *element, t_color3 albedo, int id)
 	return (new);
 }
 
-t_light	*light_point(t_point3 light_origin, t_color3 light_color, double bright_ratio)
+t_light	*light_point\
+	(t_point3 light_origin, t_color3 light_color, double bright_ratio)
 {
 	t_light	*light;
 
