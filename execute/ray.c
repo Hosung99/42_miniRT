@@ -6,7 +6,7 @@
 /*   By: Sungho <Sungho@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 15:03:18 by seoson            #+#    #+#             */
-/*   Updated: 2023/12/13 21:35:46 by Sungho           ###   ########.fr       */
+/*   Updated: 2023/12/14 17:15:16 by Sungho           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,6 @@ t_ray	ray_primary(t_camera *camera, double u, double v)
 	ray.origin = camera->origin;
 	vec_dir = vector_plus_vector(vector_multiply_scala(camera->horizontal, u), \
 	 vector_multiply_scala(camera->vertical, -v));
-	// vec.x = camera->left_top.x + vec_dir.x - camera->origin.x;
-	// vec.y = camera->left_top.y + vec_dir.y - camera->origin.y;
-	// vec.z = camera->left_top.z + vec_dir.z - camera->origin.z;
 	vec.x = camera->left_top_vector.x + vec_dir.x - camera->origin.x;
 	vec.y = camera->left_top_vector.y + vec_dir.y - camera->origin.y;
 	vec.z = camera->left_top_vector.z + vec_dir.z - camera->origin.z;
@@ -56,5 +53,5 @@ t_color3	ray_color(t_scene *scene)
 	if (hit(scene->world, &scene->ray, &scene->rec))
 		return (phong_lightning(scene));
 	else
-		return (color3(1, 1, 1));
+		return (color3(0, 0, 0));
 }

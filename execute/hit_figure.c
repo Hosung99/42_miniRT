@@ -6,7 +6,7 @@
 /*   By: Sungho <Sungho@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 15:41:52 by Sungho            #+#    #+#             */
-/*   Updated: 2023/12/13 10:50:05 by Sungho           ###   ########.fr       */
+/*   Updated: 2023/12/14 17:14:56 by Sungho           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,10 @@ int	hit_plane(t_object *world, t_ray *ray, t_hit_record *rec)
         return (0);
 	calc.molecule = vector_dot(point_minus_point(pl->point, ray->origin),\
 		 pl->dir);
-	calc.result = -calc.molecule / calc.denominator;
+	calc.result = calc.molecule / calc.denominator;
 	if (calc.result < rec->tmin || calc.result > rec->tmax)
 		return (0);
 	set_rec(rec, world, ray, calc.result);
-	rec->normal = pl->dir;
+	rec->normal = vector_normalize(pl->dir);
 	return (1);
 }
