@@ -21,6 +21,7 @@ int	main(int argc, char *argv[])
 {
 	t_scene	*scene;
 
+	// atexit(foo);
 	check_input(argc, argv);
 	scene = init_scene(argv);
 	scene->mlx = mlx_init();
@@ -35,6 +36,5 @@ int	main(int argc, char *argv[])
 	mlx_hook(scene->mlx_win, 17, 0, before_exit, scene);
 	mlx_loop(scene->mlx);
 	free_all(scene);
-	// atexit(foo);
     return (0);
 }
