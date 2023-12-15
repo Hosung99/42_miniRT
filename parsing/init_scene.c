@@ -24,7 +24,6 @@ void	set_scene_null(t_scene *scene)
 t_scene *init_scene(char *argv[])
 {
 	int 	fd;
-	char 	*line;
 	t_scene *scene;
 
 	fd = open(argv[1], O_RDONLY);

@@ -54,6 +54,8 @@ void	set_camera(t_scene *scene, char **array)
     scene->camera = camera(&scene->canvas, \
 	point3(ft_stod(point[0]), ft_stod(point[1]), ft_stod(point[2])), \
 	vec3(ft_stod(vector[0]), ft_stod(vector[1]), ft_stod(vector[2])));
+	free_array(point);
+	free_array(vector);
 }
 
 void	add_light(t_scene *scene, char **light_p, char *ratio, char **rgb, int *id)
@@ -92,4 +94,6 @@ void	set_light(t_scene *scene, char **array, int *id)
 		check_range_color(ft_stod(rgb[2]) / 255))
 		wrong_range(COLOR);
 	add_light(scene, light_point, array[2], rgb, id);
+	free_array(light_point);
+	free_array(rgb);
 }
