@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   config_setting.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: Sungho <Sungho@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 00:59:23 by sgo               #+#    #+#             */
-/*   Updated: 2023/12/14 13:26:38 by sgo              ###   ########.fr       */
+/*   Updated: 2023/12/15 14:13:41 by Sungho           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	set_ambient(t_scene *scene, char **array)
 {
 	char	**rgb;
-	
+
 	if (array_len(array) != 3)
 		error_invalid_input(OTHER);
 	rgb = ft_split(array[2], ',');

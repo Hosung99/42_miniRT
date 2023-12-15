@@ -6,7 +6,7 @@
 /*   By: Sungho <Sungho@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 15:12:33 by Sungho            #+#    #+#             */
-/*   Updated: 2023/12/13 18:08:24 by Sungho           ###   ########.fr       */
+/*   Updated: 2023/12/15 14:19:26 by Sungho           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ t_sphere	*sphere(t_point3 center, double radius)
 	return (sphere);
 }
 
-t_cylinder	*cylinder(t_point3 center, t_vector3 dir, double diameter, double height)
+t_cylinder	*cylinder\
+	(t_point3 center, t_vector3 dir, double diameter, double height)
 {
 	t_cylinder	*cylinder;
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: Sungho <Sungho@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 16:27:52 by marvin            #+#    #+#             */
-/*   Updated: 2023/12/13 21:05:22 by sgo              ###   ########.fr       */
+/*   Updated: 2023/12/15 14:13:19 by Sungho           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@
 
 t_ray		ray(t_point3 orig, t_vector3 dir);
 t_point3	ray_at(t_ray *ray, double t);
-t_ray		ray_primary(t_camera *camera, double u, double v); //가장 처음 카메라에서 출발한ray
+t_ray		ray_primary(t_camera *camera, double u, double v);
 t_color3	ray_color(t_scene *scene);
 int			hit(t_object *world, t_ray *ray, t_hit_record *rec);
 int			hit_obj(t_object *obj, t_ray *ray, t_hit_record *rec);
@@ -50,7 +50,7 @@ double		cy_boundary(t_cylinder *cy, t_point3 point);
 t_vector3	cylinder_normal(t_cylinder *cy, t_point3 point, double height);
 void		set_face_normal(t_ray *ray, t_hit_record *rec);
 void		set_rec(t_hit_record *rec, t_object *world, t_ray *ray, double root);
-
+void		draw(t_scene *scene);
 t_color3	point_light_get(t_scene *scene, t_light *light);
 t_color3	phong_lightning(t_scene *scene);
 int			in_shadow(t_scene *scene, t_ray light_ray, double light_ren);
@@ -71,6 +71,6 @@ int			before_exit(t_scene *scene);
 void		free_all(t_scene *scene);
 
 void		check_input(int argc, char *argv[]);
-t_scene 	*init_scene(char *argv[]);
+t_scene		*init_scene(char *argv[]);
 
 #endif
