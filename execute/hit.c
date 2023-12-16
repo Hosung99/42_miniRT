@@ -6,7 +6,7 @@
 /*   By: Sungho <Sungho@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 16:40:45 by seoson            #+#    #+#             */
-/*   Updated: 2023/12/15 14:28:33 by Sungho           ###   ########.fr       */
+/*   Updated: 2023/12/15 17:53:22 by Sungho           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	set_face_normal(t_ray *ray, t_hit_record *rec)
 {
-	if (vector_dot(ray->dir, rec->normal) < 0)
+	if (vector_dot(ray->dir, rec->normal) > 0)
 		rec->normal = vector_multiply_scala(rec->normal, -1);
 }
 
